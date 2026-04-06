@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♥ Я люблю Серафиму ♥</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06060a; --bg2:#0d0b14; --bg3:#140e1a;
+  --red:#d62b52; --rose:#e8527a; --pink:#f4a0b8;
+  --glow:rgba(214,43,82,.18); --glowS:rgba(214,43,82,.07);
+  --border:rgba(214,43,82,.2); --text:#f5e8ee;
+  --muted:#7a5f6a; --dim:rgba(245,232,238,.5);
+  --green:#52c97a;
+}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;min-height:100vh;overflow-x:hidden;}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6;}
+.screen{display:none;position:relative;z-index:1;}
+.screen.active{display:flex;}
+
+/* ── CONNECT ── */
+#sc-connect{min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;}
+.logo-wrap{margin-bottom:44px;user-select:none;}
+.lheart{font-size:clamp(3.5rem,9vw,6rem);display:block;line-height:1;margin-bottom:14px;filter:drop-shadow(0 0 30px var(--red));animation:hb 2s ease-in-out infinite;}
+@keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.28)}28%{transform:scale(1)}42%{transform:scale(1.14)}56%{transform:scale(1)}}
+.ltitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(2rem,6vw,4rem);line-height:1.1;background:linear-gradient(135deg,var(--red) 0%,var(--rose) 40%,var(--pink) 70%,var(--rose) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 25px rgba(214,43,82,.6));animation:lglow 4s ease-in-out infinite;}
+@keyframes lglow{0%,100%{filter:drop-shadow(0 0 25px rgba(214,43,82,.55))}50%{filter:drop-shadow(0 0 50px rgba(232,82,122,.9))}}
+.lsub{margin-top:9px;font-size:.72rem;letter-spacing:5px;text-transform:uppercase;color:var(--muted);font-weight:300;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:clamp(22px,5vw,42px);width:100%;max-width:410px;box-shadow:0 0 90px var(--glowS);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:-1px;left:25%;right:25%;height:1px;background:linear-gradient(90deg,transparent,var(--rose),transparent);}
+.ct{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--pink);margin-bottom:5px;}
+.cs{font-size:.77rem;color:var(--muted);font-weight:300;margin-bottom:26px;line-height:1.65;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 22px;border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:.87rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.4px;}
+.bp{background:linear-gradient(135deg,#9a1c38,var(--red) 50%,#bf2f5a);color:#fff;box-shadow:0 4px 24px rgba(214,43,82,.48);}
+.bp:hover{transform:translateY(-2px);box-shadow:0 8px 35px rgba(214,43,82,.68);}
+.bp:active{transform:translateY(0);}
+.bg{background:transparent;color:var(--rose);border:1px solid var(--border);margin-top:9px;}
+.bg:hover{background:var(--glow);border-color:var(--rose);}
+input[type=text]{width:100%;padding:13px 18px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Jost',sans-serif;font-size:.94rem;outline:none;transition:border-color .25s,box-shadow .25s;}
+input[type=text]:focus{border-color:var(--rose);box-shadow:0 0 0 3px var(--glow);}
+input[type=text]::placeholder{color:var(--muted);}
+.divider{display:flex;align-items:center;gap:10px;font-size:.74rem;color:var(--muted);margin:16px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.jsec{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0;}
+.jsec.open{max-height:200px;opacity:1;margin-top:9px;}
+.name-wrap{margin-bottom:22px;}
+.name-label{font-size:.73rem;color:var(--muted);font-weight:300;margin-bottom:7px;text-align:left;display:block;}
+
+/* ── WAITING ── */
+#sc-waiting{min-height:100vh;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:0;}
+.wtit{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.3rem);color:var(--pink);margin:12px 0 5px;}
+.wsub{font-size:.8rem;color:var(--muted);font-weight:300;}
+.cbox{margin:26px 0 7px;display:inline-block;background:var(--bg2);border:2px solid var(--border);border-radius:18px;padding:16px 34px;cursor:pointer;transition:all .25s;}
+.cbox:hover{border-color:var(--rose);box-shadow:0 0 40px var(--glow);}
+.ctext{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,7vw,3.2rem);letter-spacing:10px;color:var(--rose);font-weight:600;text-shadow:0 0 30px rgba(232,82,122,.45);}
+.chint{font-size:.7rem;color:var(--muted);margin-bottom:26px;}
+.dots{display:flex;gap:10px;justify-content:center;margin:6px 0 18px;}
+.dots span{width:8px;height:8px;border-radius:50%;background:var(--red);animation:dp 1.4s ease-in-out infinite;}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,80%,100%{transform:scale(.45);opacity:.25}40%{transform:scale(1.1);opacity:1}}
+
+/* ── PLAYER ── */
+#sc-player{flex-direction:column;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(6,6,10,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-shrink:0;gap:12px;}
+.tblogo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;background:linear-gradient(135deg,var(--red),var(--rose),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
+.tbst{display:flex;align-items:center;gap:7px;font-size:.74rem;color:var(--muted);}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:sdp 2s ease-in-out infinite;flex-shrink:0;}
+.sdot.off{background:var(--red);box-shadow:0 0 8px var(--red);}
+@keyframes sdp{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ── USERS PANEL ── */
+.users-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 12px;border-radius:50px;background:var(--bg3);border:1px solid var(--border);font-size:.73rem;color:var(--muted);transition:all .2s;flex-shrink:0;position:relative;}
+.users-toggle:hover{border-color:var(--rose);color:var(--pink);}
+.users-toggle .ucnt{font-size:.85rem;font-weight:600;color:var(--rose);}
+.users-dropdown{position:absolute;top:calc(100% + 10px);right:20px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px 16px;min-width:200px;box-shadow:0 8px 40px rgba(0,0,0,.7);z-index:200;display:none;}
+.users-dropdown.open{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.ud-title{font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:300;}
+.user-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(214,43,82,.1);}
+.user-row:last-child{border-bottom:none;}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--rose));display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff;flex-shrink:0;border:1px solid rgba(255,255,255,.1);}
+.user-name{font-size:.82rem;font-weight:400;color:var(--text);}
+.user-you{font-size:.65rem;color:var(--muted);margin-left:4px;}
+.user-host-badge{font-size:.6rem;background:rgba(214,43,82,.2);color:var(--rose);padding:2px 7px;border-radius:10px;border:1px solid rgba(214,43,82,.3);}
+.user-online{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);margin-left:auto;flex-shrink:0;}
+
+/* ── PLAYER AREA ── */
+.pwrap{flex:1;display:flex;flex-direction:column;padding:16px 20px 20px;max-width:1200px;width:100%;margin:0 auto;}
+.ubar{display:flex;gap:10px;margin-bottom:14px;align-items:stretch;}
+.ubar input{flex:1;padding:12px 20px;border-radius:50px;background:var(--bg2);font-size:.87rem;}
+.ubar input:focus{border-color:var(--rose);}
+.bgo{padding:12px 22px;background:linear-gradient(135deg,#9a1c38,var(--red));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:.82rem;cursor:pointer;white-space:nowrap;transition:all .25s;box-shadow:0 4px 16px rgba(214,43,82,.42);flex-shrink:0;}
+.bgo:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(214,43,82,.68);}
+.bgo:active{transform:translateY(0);}
+.bgo:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.vouter{position:relative;width:100%;padding-bottom:56.25%;border-radius:18px;overflow:hidden;background:#000;border:1px solid var(--border);box-shadow:0 0 90px rgba(0,0,0,.9),0 0 40px var(--glowS);flex-shrink:0;}
+.vouter iframe,.vouter video,.vouter #ytd{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.vph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;color:var(--muted);}
+.vph .phheart{font-size:4rem;filter:drop-shadow(0 0 20px rgba(214,43,82,.4));animation:hb 2.5s ease-in-out infinite;}
+.vph p{font-size:.84rem;font-weight:300;}
+.vph small{font-size:.7rem;opacity:.5;}
+.vctrl{display:none;align-items:center;gap:10px;padding:11px 0 3px;}
+.vctrl.on{display:flex;}
+.cb{background:none;border:none;color:var(--text);font-size:1.1rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.cb:hover{background:var(--glow);color:var(--pink);}
+.prog{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;position:relative;}
+.pf{height:100%;background:linear-gradient(90deg,var(--red),var(--pink));border-radius:2px;width:0%;transition:width .4s linear;position:relative;pointer-events:none;}
+.pf::after{content:'';position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--red);}
+.ttxt{font-size:.75rem;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+
+/* ── REACTIONS ── */
+.react-bar{display:flex;gap:8px;padding:10px 0 3px;align-items:center;}
+.rbtn{background:none;border:1px solid var(--border);border-radius:50px;padding:5px 12px;font-size:1rem;cursor:pointer;transition:all .2s;color:var(--text);}
+.rbtn:hover{border-color:var(--rose);transform:scale(1.15);background:var(--glow);}
+.react-float{position:fixed;pointer-events:none;font-size:2.5rem;z-index:9997;animation:floatUp 1.8s ease-out forwards;}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}80%{opacity:.8;transform:translateY(-140px) scale(1.15)}100%{opacity:0;transform:translateY(-200px) scale(.8)}}
+
+/* ── EXTRACT LOADER ── */
+.extract-overlay{position:absolute;inset:0;background:rgba(6,6,10,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:10;border-radius:18px;}
+.extract-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--rose);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.extract-msg{font-size:.8rem;color:var(--muted);}
+
+.lfoot{text-align:center;padding:13px 16px;font-size:.71rem;color:var(--muted);border-top:1px solid rgba(214,43,82,.1);flex-shrink:0;font-weight:300;letter-spacing:.5px;}
+.lfoot span{color:var(--rose);}
+
+/* ── TOAST & PILL ── */
+.toast{position:fixed;top:18px;right:18px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:11px 18px;font-size:.79rem;z-index:9999;transform:translateX(calc(100% + 30px));transition:transform .35s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 6px 30px rgba(0,0,0,.6);max-width:280px;pointer-events:none;}
+.toast.on{transform:translateX(0);}
+.pill{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(214,43,82,.92);color:#fff;padding:10px 22px;border-radius:50px;font-size:.79rem;font-weight:500;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);z-index:9998;backdrop-filter:blur(8px);box-shadow:0 4px 20px rgba(214,43,82,.5);pointer-events:none;white-space:nowrap;}
+.pill.on{transform:translateX(-50%) translateY(0);}
+
+@media(max-width:560px){
+  .ubar{flex-direction:column;}
+  .ubar input,.bgo{border-radius:14px;width:100%;}
+  .topbar{padding:8px 14px;gap:8px;}
+  .tblogo{font-size:.95rem;}
+  .pwrap{padding:12px 12px 16px;}
+  .users-dropdown{right:12px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+<div class="toast" id="toast"></div>
+<div class="pill" id="pill"></div>
+
+<!-- ════ CONNECT ════ -->
+<div class="screen active" id="sc-connect">
+  <div class="logo-wrap">
+    <span class="lheart">♥</span>
+    <div class="ltitle">Я люблю Серафиму</div>
+    <div class="lsub">вместе смотрим · вместе чувствуем</div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Романтический вечер</div>
+    <p class="cs">Введи своё имя и создай комнату — поделись кодом с любимой, она войдёт и вы начнёте смотреть вместе ♥</p>
+
+    <div class="name-wrap">
+      <span class="name-label">Как тебя зовут?</span>
+      <input type="text" id="ni" placeholder="Твоё имя" maxlength="20" autocomplete="off" spellcheck="false">
+    </div>
+
+    <button class="btn bp" onclick="createRoom()">♥ &nbsp;Создать комнату</button>
+    <div class="divider">или</div>
+    <button class="btn bg" onclick="toggleJoin()">Войти по коду</button>
+    <div class="jsec" id="jsec">
+      <div style="height:11px"></div>
+      <input type="text" id="jin"
+        placeholder="Введи 6-значный код"
+        maxlength="6" autocomplete="off" spellcheck="false"
+        style="text-align:center;letter-spacing:7px;font-size:1.2rem;text-transform:uppercase;margin-bottom:10px">
+      <button class="btn bp" onclick="joinRoom()">Войти ♥</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ WAITING ════ -->
+<div class="screen" id="sc-waiting">
+  <span class="lheart" style="font-size:3rem">♥</span>
+  <div class="wtit">Ждём Серафиму…</div>
+  <p class="wsub">Поделись кодом с любимой</p>
+  <div class="cbox" onclick="copyCode()" title="Нажми чтобы скопировать">
+    <div class="ctext" id="cd">——</div>
+  </div>
+  <div class="chint">нажми чтобы скопировать ♥</div>
+  <div class="dots"><span></span><span></span><span></span></div>
+  <p style="font-size:.79rem;color:var(--muted)">Как только она войдёт — начнём ♥</p>
+</div>
+
+<!-- ════ PLAYER ════ -->
+<div class="screen" id="sc-player">
+  <div class="topbar">
+    <div class="tblogo">♥ Я люблю тебя</div>
+
+    <!-- Users toggle -->
+    <div class="users-toggle" id="usersToggle" onclick="toggleUsersPanel()">
+      <span>👥</span>
+      <span class="ucnt" id="usersCnt">1</span>
+      <span id="usersLabel">участник</span>
+    </div>
+    <div class="users-dropdown" id="usersDropdown">
+      <div class="ud-title">В комнате</div>
+      <div id="usersList"></div>
+    </div>
+
+    <div class="tbst">
+      <div class="sdot off" id="sdot"></div>
+      <span id="stxt">Соединяемся…</span>
+    </div>
+  </div>
+
+  <div class="pwrap">
+    <div class="ubar">
+      <input type="text" id="ui" placeholder="Ссылка на видео (YouTube, VK, .mp4, Rutube ...)">
+      <button class="bgo" id="gobtn" onclick="loadFromInput()">▶ Воспроизвести</button>
+    </div>
+    <div class="vouter" id="vo">
+      <div class="vph" id="vph">
+        <span class="phheart">♥</span>
+        <p>Вставь ссылку на видео выше</p>
+        <small>YouTube · VK · Rutube · прямая ссылка .mp4</small>
+      </div>
+    </div>
+    <div class="vctrl" id="vc">
+      <button class="cb" id="ppb" onclick="togglePP()">▶</button>
+      <div class="prog" id="pg" onclick="seekClick(event)">
+        <div class="pf" id="pf"></div>
+      </div>
+      <div class="ttxt" id="tt">0:00 / 0:00</div>
+      <button class="cb" onclick="goFS()" title="Полный экран">⛶</button>
+    </div>
+    <!-- Reactions -->
+    <div class="react-bar">
+      <span style="font-size:.72rem;color:var(--muted);margin-right:4px;">реакции:</span>
+      <button class="rbtn" onclick="sendReaction('❤️')">❤️</button>
+      <button class="rbtn" onclick="sendReaction('😂')">😂</button>
+      <button class="rbtn" onclick="sendReaction('😱')">😱</button>
+      <button class="rbtn" onclick="sendReaction('🥺')">🥺</button>
+      <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
+      <button class="rbtn" onclick="sendReaction('💋')">💋</button>
+      <button class="rbtn" onclick="sendReaction('💋люблю тебя очень сильно❤️')">love</button>
+    </div>
+  </div>
+  <div class="lfoot">Смотрим с любовью <span>♥</span> Я тебя очень сильно люблю,милая❤️</div>
+</div>
+
+<script>
+/* ─── CANVAS HEARTS ─── */
+(function(){
+  const c=document.getElementById('cv'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  const CL=['#d62b52','#e8527a','#f4a0b8','#a01e3a','#c93060','#ff8fab'];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  window.addEventListener('resize',resize);resize();
+  function rp(){return{x:Math.random()*W,y:H+35+Math.random()*50,
+    sz:7+Math.random()*17,sp:.35+Math.random()*.65,
+    dr:(Math.random()-.5)*.35,rot:Math.random()*Math.PI*2,
+    rs:(Math.random()-.5)*.013,al:.07+Math.random()*.16,
+    cl:CL[Math.floor(Math.random()*CL.length)]};}
+  for(let i=0;i<20;i++){const p=rp();p.y=Math.random()*H;pts.push(p);}
+  function drawH(ctx,x,y,s,r,a){
+    ctx.save();ctx.translate(x,y);ctx.rotate(r);ctx.globalAlpha=a;
+    ctx.beginPath();ctx.moveTo(0,-s*.4);
+    ctx.bezierCurveTo(s*.5,-s*1.1,s*1.2,-s*.2,0,s*.6);
+    ctx.bezierCurveTo(-s*1.2,-s*.2,-s*.5,-s*1.1,0,-s*.4);
+    ctx.closePath();ctx.fill();ctx.restore();
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      ctx.fillStyle=p.cl;drawH(ctx,p.x,p.y,p.sz,p.rot,p.al);
+      p.y-=p.sp;p.x+=p.dr;p.rot+=p.rs;
+      if(p.y<-40)Object.assign(p,rp());
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ─── STATE ─── */
+let peer=null,conn=null,connected=false,isHost=false;
+let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
+let dirVid=null,syncing=false,tTmr=null,pTmr=null;
+let myName='',peerName='',currentUrl='';
+
+/* ─── USERS PANEL ─── */
+let panelOpen=false;
+function toggleUsersPanel(){
+  panelOpen=!panelOpen;
+  document.getElementById('usersDropdown').classList.toggle('open',panelOpen);
+}
+document.addEventListener('click',function(e){
+  if(!document.getElementById('usersToggle').contains(e.target))
+    {panelOpen=false;document.getElementById('usersDropdown').classList.remove('open');}
+});
+
+function updateUsers(){
+  const list=document.getElementById('usersList');
+  const cnt=document.getElementById('usersCnt');
+  const lbl=document.getElementById('usersLabel');
+  const users=[{name:myName,me:true,host:isHost}];
+  if(connected&&peerName)users.push({name:peerName,me:false,host:!isHost});
+  cnt.textContent=users.length;
+  lbl.textContent=users.length===1?'участник':'участников';
+  list.innerHTML=users.map(u=>`
+    <div class="user-row">
+      <div class="user-avatar">${(u.name||'?')[0].toUpperCase()}</div>
+      <div>
+        <span class="user-name">${esc(u.name||'Аноним')}</span>
+        ${u.me?'<span class="user-you">(ты)</span>':''}
+        ${u.host?'<span class="user-host-badge">хост</span>':''}
+      </div>
+      ${connected||u.me?'<div class="user-online"></div>':''}
+    </div>`).join('');
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ─── YT API ─── */
+window.onYouTubeIframeAPIReady=function(){ytReady=true;};
+(function(){const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);})();
+
+/* ─── SCREENS ─── */
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+/* ─── ROOM ─── */
+function getMyName(){
+  const n=document.getElementById('ni').value.trim();
+  return n||'Аноним';
+}
+function mkCode(){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<6;i++)s+=ch[Math.floor(Math.random()*ch.length)];return s;}
+
+function createRoom(){
+  myName=getMyName();isHost=true;
+  const code=mkCode();
+  updateUsers();
+  initPeer('sera-'+code,function(){
+    document.getElementById('cd').textContent=code;
+    show('sc-waiting');
+  });
+  peer.on('connection',function(c){
+    conn=c;wireConn(true);
+    show('sc-player');
+    toast('♥ Соединение установлено!');
+  });
+}
+
+function toggleJoin(){
+  const s=document.getElementById('jsec');
+  s.classList.toggle('open');
+  if(s.classList.contains('open'))document.getElementById('jin').focus();
+}
+
+function joinRoom(){
+  myName=getMyName();isHost=false;
+  const code=document.getElementById('jin').value.trim().toUpperCase();
+  if(code.length<4){toast('Введи код комнаты');return;}
+  updateUsers();
+  initPeer(undefined,function(){
+    conn=peer.connect('sera-'+code,{reliable:true,serialization:'json'});
+    wireConn(false);
+    conn.on('open',function(){show('sc-player');toast('♥ Подключилась к комнате!');});
+    conn.on('error',function(){toast('Не удалось подключиться. Проверь код.');});
+  });
+}
+
+function copyCode(){
+  const code=document.getElementById('cd').textContent;
+  navigator.clipboard.writeText(code).then(()=>toast('Скопировано: '+code)).catch(()=>toast('Код: '+code));
+}
+
+/* ─── PEER ─── */
+function initPeer(id,onOpen){
+  const cfg={host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0};
+  peer=id?new Peer(id,cfg):new Peer(cfg);
+  peer.on('open',onOpen||function(){});
+  peer.on('error',function(e){
+    if(e.type==='unavailable-id'&&id){peer.destroy();createRoom();}
+    else toast('Ошибка: '+e.type);
+  });
+  peer.on('disconnected',function(){
+    connected=false;setStatus(false);updateUsers();
+    setTimeout(()=>{try{peer.reconnect();}catch(x){}},3000);
+  });
+}
+
+function wireConn(asHost){
+  conn.on('data',handleData);
+  conn.on('open',function(){
+    connected=true;setStatus(true);
+    // Send hello with our name
+    send({t:'hello',name:myName,host:asHost});
+    // If host and video is loaded — sync state to guest
+    if(asHost&&currentUrl){
+      setTimeout(()=>{
+        const tm=getCurrentTime();
+        const playing=isPlaying();
+        send({t:'sync',url:currentUrl,tm,playing});
+      },600);
+    }
+  });
+  conn.on('close',function(){connected=false;setStatus(false);peerName='';updateUsers();toast('Соединение прервано…');});
+  conn.on('error',function(){connected=false;setStatus(false);peerName='';updateUsers();});
+}
+
+function send(d){if(conn&&conn.open)conn.send(d);}
+function setStatus(on){
+  document.getElementById('sdot').className='sdot'+(on?'':' off');
+  document.getElementById('stxt').textContent=on?'Вместе ♥':'Не в сети';
+}
+
+/* ─── REMOTE EVENTS ─── */
+function handleData(d){
+  switch(d.t){
+    case'hello':
+      peerName=d.name||'Аноним';
+      updateUsers();
+      toast('♥ '+(d.host?'Хост':'')+(peerName)+' в комнате!');
+      // Guest: if host sends hello, reply with our hello too
+      if(!d.host)send({t:'hello',name:myName,host:false});
+      break;
+    case'sync':
+      // Host is syncing state to guest on join
+      if(d.url&&!currentUrl){
+        loadVideo(d.url,false,()=>{
+          setTimeout(()=>{
+            if(d.tm)remoteSeek(d.tm);
+            if(d.playing)remotePlay(d.tm||0);
+            else remotePause(d.tm||0);
+          },1500);
+        });
+      }
+      break;
+    case'url':loadVideo(d.url,false);break;
+    case'play':syncing=true;remotePlay(d.tm);pill('▶ Воспроизводит');setTimeout(()=>{syncing=false;},600);break;
+    case'pause':syncing=true;remotePause(d.tm);pill('⏸ Пауза');setTimeout(()=>{syncing=false;},600);break;
+    case'seek':syncing=true;remoteSeek(d.tm);setTimeout(()=>{syncing=false;},600);break;
+    case'reaction':showReaction(d.emoji,false);break;
+  }
+}
+
+function remotePlay(t){
+  if(vidType==='yt'&&ytPlayer){try{if(Math.abs(ytPlayer.getCurrentTime()-t)>2.5)ytPlayer.seekTo(t,true);ytPlayer.playVideo();}catch(e){}}
+  else if(vidType==='direct'&&dirVid){if(Math.abs(dirVid.currentTime-t)>2.5)dirVid.currentTime=t;dirVid.play().catch(()=>{});}
+}
+function remotePause(t){
+  if(vidType==='yt'&&ytPlayer){try{ytPlayer.pauseVideo();if(Math.abs(ytPlayer.getCurrentTime()-t)>2.5)ytPlayer.seekTo(t,true);}catch(e){}}
+  else if(vidType==='direct'&&dirVid){dirVid.pause();if(Math.abs(dirVid.currentTime-t)>2.5)dirVid.currentTime=t;}
+}
+function remoteSeek(t){
+  if(vidType==='yt'&&ytPlayer){try{ytPlayer.seekTo(t,true);}catch(e){}}
+  else if(vidType==='direct'&&dirVid){dirVid.currentTime=t;}
+}
+
+function getCurrentTime(){
+  if(vidType==='yt'&&ytPlayer){try{return ytPlayer.getCurrentTime();}catch(e){}}
+  if(vidType==='direct'&&dirVid)return dirVid.currentTime;
+  return 0;
+}
+function isPlaying(){
+  if(vidType==='yt'&&ytPlayer){try{return ytPlayer.getPlayerState()===1;}catch(e){}}
+  if(vidType==='direct'&&dirVid)return !dirVid.paused;
+  return false;
+}
+
+/* ─── URL PARSE ─── */
+function parseVkTimestamp(url){
+  // ?t=2m40s or ?t=160
+  const m=url.match(/[?&]t=(?:(\d+)m(\d+)s|(\d+))/);
+  if(!m)return 0;
+  if(m[3])return parseInt(m[3]);
+  return(parseInt(m[1]||0)*60)+parseInt(m[2]||0);
+}
+function parseUrl(url){
+  url=url.trim();
+  // YouTube
+  let m=url.match(/(?:youtube\.com\/watch[?&]v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  if(m)return{t:'yt',id:m[1]};
+  m=url.match(/youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/);
+  if(m)return{t:'yt',id:m[1]};
+  // VK — поддержка vk.com и vkvideo.ru
+  m=url.match(/(?:vk\.com|vkvideo\.ru)\/video(-?\d+)_(\d+)/);
+  if(m)return{t:'vk',oid:m[1],vid:m[2],tm:parseVkTimestamp(url)};
+  m=url.match(/(?:vk\.com|vkvideo\.ru)\/clip(-?\d+)_(\d+)/);
+  if(m)return{t:'vk',oid:m[1],vid:m[2],tm:0};
+  if(/vk\.com\/video_ext\.php/.test(url))return{t:'vk-direct',url};
+  // Rutube
+  m=url.match(/rutube\.ru\/video\/([a-f0-9]{32})\/?/i);
+  if(m)return{t:'rutube',id:m[1]};
+  // Direct media
+  if(/\.(mp4|webm|ogg|mov|mkv|m3u8)(\?.*)?$/i.test(url))return{t:'direct',url};
+  // Generic http — try cobalt first
+  if(/^https?:\/\//.test(url))return{t:'extract',url};
+  return null;
+}
+
+/* ─── VIDEO EXTRACTION via cobalt.tools ─── */
+async function extractVideo(url){
+  try{
+    const r=await fetch('https://api.cobalt.tools/',{
+      method:'POST',
+      headers:{'Accept':'application/json','Content-Type':'application/json'},
+      body:JSON.stringify({url,videoQuality:'1080',filenameStyle:'basic'})
+    });
+    const d=await r.json();
+    if(d.status==='stream'||d.status==='tunnel'||d.status==='redirect')return d.url;
+    if(d.status==='picker'&&d.picker?.length)return d.picker[0].url;
+  }catch(e){}
+  return null;
+}
+
+/* ─── LOAD VIDEO ─── */
+function loadFromInput(){
+  const url=document.getElementById('ui').value.trim();
+  if(!url){toast('Вставь ссылку на видео');return;}
+  loadVideo(url,true);
+}
+
+async function loadVideo(url,broadcast,cb){
+  const p=parseUrl(url);
+  if(!p){toast('Не удалось распознать ссылку');return;}
+  if(!broadcast)document.getElementById('ui').value=url;
+  currentUrl=url;
+  clearPlayer();
+  document.getElementById('vph').style.display='none';
+  vidType=p.t;
+
+  if(p.t==='yt'){loadYT(p.id);if(broadcast)send({t:'url',url});if(cb)cb();}
+  else if(p.t==='vk'){loadVK(p.oid,p.vid,p.tm);if(broadcast)send({t:'url',url});if(cb)cb();}
+  else if(p.t==='vk-direct'){loadVKEmbed(p.url);if(broadcast)send({t:'url',url});if(cb)cb();}
+  else if(p.t==='rutube'){loadRutube(p.id);if(broadcast)send({t:'url',url});if(cb)cb();}
+  else if(p.t==='direct'){loadDirect(p.url);if(broadcast)send({t:'url',url});if(cb)cb();}
+  else if(p.t==='extract'){
+    // Show loading spinner
+    showExtractLoader(true);
+    const btn=document.getElementById('gobtn');
+    btn.disabled=true;btn.textContent='⏳ Извлекаю…';
+    const direct=await extractVideo(url);
+    showExtractLoader(false);
+    btn.disabled=false;btn.textContent='▶ Воспроизвести';
+    if(direct){
+      vidType='direct';
+      loadDirect(direct);
+      if(broadcast)send({t:'url',url:direct});
+      if(cb)cb();
+    } else {
+      toast('Не удалось извлечь видео. Попробуй прямую ссылку .mp4');
+      document.getElementById('vph').style.display='flex';
+      currentUrl='';
+    }
+  }
+}
+
+function showExtractLoader(on){
+  let ov=document.getElementById('extLoader');
+  if(on){
+    if(ov)return;
+    ov=document.createElement('div');
+    ov.id='extLoader';ov.className='extract-overlay';
+    ov.innerHTML='<div class="extract-spinner"></div><div class="extract-msg">Извлекаю видео…</div>';
+    document.getElementById('vo').appendChild(ov);
+  } else {
+    if(ov)ov.remove();
+  }
+}
+
+function clearPlayer(){
+  if(ytIv){clearInterval(ytIv);ytIv=null;}
+  if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+  const vo=document.getElementById('vo');
+  vo.querySelectorAll('iframe,video').forEach(el=>el.remove());
+  const d=document.getElementById('ytd');if(d)d.remove();
+  const ov=document.getElementById('extLoader');if(ov)ov.remove();
+  document.getElementById('vc').classList.remove('on');
+  dirVid=null;vidType=null;
+}
+
+/* ── YT ── */
+function loadYT(vid){
+  const vo=document.getElementById('vo');
+  const d=document.createElement('div');
+  d.id='ytd';d.style.cssText='position:absolute;inset:0;width:100%;height:100%';
+  vo.appendChild(d);
+  function init(){
+    ytPlayer=new YT.Player('ytd',{
+      videoId:vid,
+      playerVars:{autoplay:1,rel:0,modestbranding:1,playsinline:1,origin:location.origin||'https://localhost'},
+      events:{onStateChange:onYtSt,onError:function(){toast('Ошибка YouTube плеера');}}
+    });
+  }
+  if(typeof YT!=='undefined'&&YT.Player){init();}
+  else{
+    let tr=0;
+    const iv=setInterval(()=>{
+      if(typeof YT!=='undefined'&&YT.Player){clearInterval(iv);init();}
+      else if(++tr>30){clearInterval(iv);toast('YouTube API не загрузился');}
+    },300);
+  }
+}
+function onYtSt(e){
+  if(syncing)return;
+  const S=YT.PlayerState;
+  if(e.data===S.PLAYING){send({t:'play',tm:ytPlayer.getCurrentTime()});startYtTr();}
+  else if(e.data===S.PAUSED){send({t:'pause',tm:ytPlayer.getCurrentTime()});stopYtTr();}
+}
+function startYtTr(){
+  stopYtTr();lastYtT=ytPlayer?ytPlayer.getCurrentTime():0;
+  ytIv=setInterval(()=>{
+    if(!ytPlayer)return;
+    try{const ct=ytPlayer.getCurrentTime();if(!syncing&&Math.abs(ct-lastYtT)>3)send({t:'seek',tm:ct});lastYtT=ct;}catch(e){}
+  },1000);
+}
+function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}}
+
+/* ── VK ── */
+function loadVK(oid,vid,tm){
+  const fr=document.createElement('iframe');
+  fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
+  let src='https://vk.com/video_ext.php?oid='+oid+'&id='+vid+'&hd=2&autoplay=1';
+  if(tm)src+='&t='+Math.floor(tm);
+  fr.src=src;
+  fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
+  document.getElementById('vo').appendChild(fr);
+  toast('VK: управление через кнопки плеера');
+}
+function loadVKEmbed(url){
+  const fr=document.createElement('iframe');
+  fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
+  fr.src=url;fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
+  document.getElementById('vo').appendChild(fr);
+}
+
+/* ── Rutube ── */
+function loadRutube(id){
+  const fr=document.createElement('iframe');
+  fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
+  fr.src='https://rutube.ru/play/embed/'+id+'?skinColor=d62b52&autoStart=true';
+  fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
+  document.getElementById('vo').appendChild(fr);
+  toast('Rutube: управление через кнопки плеера');
+}
+
+/* ── DIRECT ── */
+function loadDirect(url){
+  const v=document.createElement('video');
+  v.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:#000';
+  v.src=url;v.autoplay=true;v.controls=false;
+  document.getElementById('vo').appendChild(v);
+  dirVid=v;vidType='direct';
+  document.getElementById('vc').classList.add('on');
+  v.addEventListener('play',()=>{if(!syncing)send({t:'play',tm:v.currentTime});document.getElementById('ppb').textContent='⏸';});
+  v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
+  v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
+  v.addEventListener('timeupdate',updProg);
+  v.play().catch(()=>{});
+}
+
+/* ─── CONTROLS ─── */
+function togglePP(){if(!dirVid)return;dirVid.paused?dirVid.play().catch(()=>{}):dirVid.pause();}
+function seekClick(e){
+  if(!dirVid||!dirVid.duration)return;
+  const r=document.getElementById('pg').getBoundingClientRect();
+  dirVid.currentTime=((e.clientX-r.left)/r.width)*dirVid.duration;
+}
+function goFS(){
+  const el=document.getElementById('vo');
+  document.fullscreenElement?document.exitFullscreen():el.requestFullscreen().catch(()=>{});
+}
+function updProg(){
+  if(!dirVid)return;
+  const p=isNaN(dirVid.duration)?0:(dirVid.currentTime/dirVid.duration)*100;
+  document.getElementById('pf').style.width=p+'%';
+  document.getElementById('tt').textContent=fmt(dirVid.currentTime)+' / '+fmt(dirVid.duration);
+}
+function fmt(s){if(!s||isNaN(s))return'0:00';const m=Math.floor(s/60),ss=Math.floor(s%60);return m+':'+(ss<10?'0':'')+ss;}
+
+/* ─── REACTIONS ─── */
+function sendReaction(emoji){
+  showReaction(emoji,true);
+  send({t:'reaction',emoji});
+}
+function showReaction(emoji,mine){
+  const el=document.createElement('div');
+  el.className='react-float';
+  el.textContent=emoji;
+  el.style.left=(20+Math.random()*60)+'%';
+  el.style.bottom='80px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1900);
+  if(!mine)pill(peerName+' отправил(а) '+emoji);
+}
+
+/* ─── NOTIFICATIONS ─── */
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(tTmr);tTmr=setTimeout(()=>el.classList.remove('on'),3200);}
+function pill(msg){const el=document.getElementById('pill');el.textContent=msg;el.classList.add('on');clearTimeout(pTmr);pTmr=setTimeout(()=>el.classList.remove('on'),2500);}
+
+/* ─── KEYBOARD ─── */
+document.addEventListener('keydown',function(e){
+  if(document.activeElement.tagName==='INPUT')return;
+  if(!document.getElementById('sc-player').classList.contains('active'))return;
+  if(e.code==='Space'){
+    e.preventDefault();
+    if(vidType==='yt'&&ytPlayer){try{ytPlayer.getPlayerState()===1?ytPlayer.pauseVideo():ytPlayer.playVideo();}catch(x){}}
+    else if(vidType==='direct')togglePP();
+  }
+  if(e.code==='KeyF')goFS();
+});
+document.getElementById('jin').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom();});
+document.getElementById('jin').addEventListener('input',function(){this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'');});
+document.addEventListener('keydown',e=>{if(document.activeElement===document.getElementById('ui')&&e.key==='Enter')loadFromInput();});
+
+/* ─── TAB TITLE CYCLE ─── */
+const titles=['♥ Я люблю Серафиму ♥','💕 Серафима — моя любовь','❤ Смотрим вместе'];
+let ti=0;setInterval(()=>{document.title=titles[ti++%titles.length];},4000);
+</script>
+</body>
+</html>
