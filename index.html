@@ -103,11 +103,12 @@ input[type=text]::placeholder{color:var(--muted);}
 .vph .phheart{font-size:4rem;filter:drop-shadow(0 0 20px rgba(214,43,82,.4));animation:hb 2.5s ease-in-out infinite;}
 .vph p{font-size:.84rem;font-weight:300;}
 .vph small{font-size:.7rem;opacity:.5;}
-.vctrl{display:none;align-items:center;gap:10px;padding:11px 0 3px;}
+.vctrl{display:none;align-items:center;gap:10px;padding:14px 0 4px;}
 .vctrl.on{display:flex;}
 .cb{background:none;border:none;color:var(--text);font-size:1.1rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
 .cb:hover{background:var(--glow);color:var(--pink);}
-.prog{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;position:relative;}
+.prog{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;position:relative;touch-action:none;}
+.prog-hit{position:absolute;inset:-14px 0;cursor:pointer;}
 .pf{height:100%;background:linear-gradient(90deg,var(--red),var(--pink));border-radius:2px;width:0%;transition:width .4s linear;position:relative;pointer-events:none;}
 .pf::after{content:'';position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--red);}
 .ttxt{font-size:.75rem;color:var(--muted);white-space:nowrap;flex-shrink:0;}
@@ -154,13 +155,18 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
 #sc-player{overflow-y:auto;-webkit-overflow-scrolling:touch;height:100%;position:absolute;inset:0;}
 /* Bigger tap targets on mobile */
 @media(max-width:768px){
-  .cb{width:44px;height:44px;font-size:1.2rem;}
-  .rbtn{padding:8px 14px;font-size:1.1rem;}
+  .cb{width:48px;height:48px;font-size:1.3rem;}
+  .rbtn{padding:9px 14px;font-size:1.15rem;}
   .bgo{padding:14px 22px;}
   .btn{padding:16px 22px;}
   input[type=text]{padding:14px 18px;font-size:1rem;}
   .users-dropdown{right:10px;left:10px;min-width:unset;}
   .react-bar{gap:6px;flex-wrap:wrap;}
+  .vctrl{padding:16px 0 8px;gap:12px;}
+  .prog{height:6px;}
+  .prog-hit{inset:-18px 0;}
+  .pf::after{width:16px;height:16px;right:-8px;top:-5px;}
+  .ttxt{font-size:.8rem;}
 }
 
 /* ── LOVE MODAL ── */
@@ -269,8 +275,9 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
     </div>
     <div class="vctrl" id="vc">
       <button class="cb" id="ppb" onclick="togglePP()">▶</button>
-      <div class="prog" id="pg" onclick="seekClick(event)">
+      <div class="prog" id="pg" onclick="seekClick(event)" ontouchstart="seekTouch(event)" ontouchmove="seekTouch(event)">
         <div class="pf" id="pf"></div>
+        <div class="prog-hit"></div>
       </div>
       <div class="ttxt" id="tt">0:00 / 0:00</div>
       <button class="cb" onclick="goFS()" title="Полный экран">⛶</button>
@@ -328,6 +335,34 @@ let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
 let dirVid=null,syncing=false,tTmr=null,pTmr=null;
 let myName='',peerName='',currentUrl='';
 let myTime=0,peerTime=0,syncIv=null;
+let rafId=null; // requestAnimationFrame для мобильного трекинга времени
+
+/* ─── МОБИЛЬНЫЙ ТРЕКИНГ ВРЕМЕНИ ─── */
+// Обновляем myTime через rAF — работает даже когда setInterval тормозит на мобиле
+function startRafTimeTrack(){
+  if(rafId)cancelAnimationFrame(rafId);
+  function tick(){
+    const ct=getCurrentTime();
+    if(ct>0){myTime=ct;}
+    rafId=requestAnimationFrame(tick);
+  }
+  rafId=requestAnimationFrame(tick);
+}
+function stopRafTimeTrack(){
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+}
+
+// Когда вкладка снова становится видимой — сразу синхронизируем время
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden){
+    const ct=getCurrentTime();
+    if(ct>0){
+      myTime=ct;
+      if(connected)send({t:'time',tm:ct});
+      updateUsers();
+    }
+  }
+});
 
 /* ─── USERS PANEL ─── */
 let panelOpen=false;
@@ -447,11 +482,20 @@ function copyCode(){
 
 /* ─── PEER ─── */
 function initPeer(id,onOpen){
-  const cfg={host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0};
+  const iceServers=[
+    {urls:'stun:stun.cloudflare.com:3478'},
+    {urls:'stun:global.stun.twilio.com:3478'},
+    {urls:'stun:stun1.l.google.com:19302'},
+    {urls:'stun:stun.stunprotocol.org:3478'}
+  ];
+  const cfg={host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0,config:{iceServers}};
   peer=id?new Peer(id,cfg):new Peer(cfg);
   peer.on('open',onOpen||function(){});
   peer.on('error',function(e){
     if(e.type==='unavailable-id'&&id){peer.destroy();createRoom();}
+    else if(e.type==='network'||e.type==='disconnected'||e.type==='server-error'){
+      toast('⚠️ Ошибка сети. Если ты в России — включи VPN и обнови страницу');
+    }
     else toast('Ошибка: '+e.type);
   });
   peer.on('disconnected',function(){
@@ -680,6 +724,7 @@ function showExtractLoader(on){
 function clearPlayer(){
   if(ytIv){clearInterval(ytIv);ytIv=null;}
   if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+  stopRafTimeTrack();
   const vo=document.getElementById('vo');
   vo.querySelectorAll('iframe,video').forEach(el=>el.remove());
   const d=document.getElementById('ytd');if(d)d.remove();
@@ -718,12 +763,13 @@ function onYtSt(e){
 }
 function startYtTr(){
   stopYtTr();lastYtT=ytPlayer?ytPlayer.getCurrentTime():0;
+  startRafTimeTrack(); // мобильный трекинг для YT тоже
   ytIv=setInterval(()=>{
     if(!ytPlayer)return;
     try{const ct=ytPlayer.getCurrentTime();if(!syncing&&Math.abs(ct-lastYtT)>3)send({t:'seek',tm:ct});lastYtT=ct;}catch(e){}
   },1000);
 }
-function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}}
+function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}stopRafTimeTrack();}
 
 /* ── VK ── */
 function loadVK(oid,vid,tm){
@@ -765,6 +811,17 @@ function loadDirect(url){
   v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
   v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
   v.addEventListener('timeupdate',()=>{updProg();myTime=v.currentTime;});
+  // iOS: нативный плеер — ловим выход из фуллскрина чтобы синхронизировать время
+  v.addEventListener('webkitendfullscreen',()=>{
+    myTime=v.currentTime;
+    if(connected)send({t:'time',tm:v.currentTime});
+    updateUsers();
+  });
+  v.addEventListener('webkitbeginfullscreen',()=>{
+    // запускаем агрессивный трекинг пока открыт нативный плеер
+    startRafTimeTrack();
+  });
+  startRafTimeTrack();
   v.play().catch(()=>{});
 }
 
@@ -773,7 +830,16 @@ function togglePP(){if(!dirVid)return;dirVid.paused?dirVid.play().catch(()=>{}):
 function seekClick(e){
   if(!dirVid||!dirVid.duration)return;
   const r=document.getElementById('pg').getBoundingClientRect();
-  dirVid.currentTime=((e.clientX-r.left)/r.width)*dirVid.duration;
+  const x=Math.max(0,Math.min(e.clientX-r.left,r.width));
+  dirVid.currentTime=(x/r.width)*dirVid.duration;
+}
+function seekTouch(e){
+  e.preventDefault();
+  if(!dirVid||!dirVid.duration)return;
+  const t=e.touches[0];
+  const r=document.getElementById('pg').getBoundingClientRect();
+  const x=Math.max(0,Math.min(t.clientX-r.left,r.width));
+  dirVid.currentTime=(x/r.width)*dirVid.duration;
 }
 function goFS(){
   const el=document.getElementById('vo');
