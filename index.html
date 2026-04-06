@@ -197,7 +197,7 @@ input[type=text]::placeholder{color:var(--muted);}
 <!-- ════ PLAYER ════ -->
 <div class="screen" id="sc-player">
   <div class="topbar">
-    <div class="tblogo">♥ Я люблю тебя</div>
+    <div class="tblogo">♥ Я люблю Серафиму</div>
 
     <!-- Users toggle -->
     <div class="users-toggle" id="usersToggle" onclick="toggleUsersPanel()">
@@ -245,10 +245,9 @@ input[type=text]::placeholder{color:var(--muted);}
       <button class="rbtn" onclick="sendReaction('🥺')">🥺</button>
       <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
       <button class="rbtn" onclick="sendReaction('💋')">💋</button>
-      <button class="rbtn" onclick="sendReaction('💋люблю тебя очень сильно❤️')">love</button>
     </div>
   </div>
-  <div class="lfoot">Смотрим с любовью <span>♥</span> Я тебя очень сильно люблю,милая❤️</div>
+  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя Серафима — самая лучшая</div>
 </div>
 
 <script>
@@ -289,6 +288,7 @@ let peer=null,conn=null,connected=false,isHost=false;
 let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
 let dirVid=null,syncing=false,tTmr=null,pTmr=null;
 let myName='',peerName='',currentUrl='';
+let myTime=0,peerTime=0,syncIv=null;
 
 /* ─── USERS PANEL ─── */
 let panelOpen=false;
@@ -305,17 +305,20 @@ function updateUsers(){
   const list=document.getElementById('usersList');
   const cnt=document.getElementById('usersCnt');
   const lbl=document.getElementById('usersLabel');
-  const users=[{name:myName,me:true,host:isHost}];
-  if(connected&&peerName)users.push({name:peerName,me:false,host:!isHost});
+  const users=[{name:myName,me:true,host:isHost,tm:myTime}];
+  if(connected&&peerName)users.push({name:peerName,me:false,host:!isHost,tm:peerTime});
   cnt.textContent=users.length;
   lbl.textContent=users.length===1?'участник':'участников';
   list.innerHTML=users.map(u=>`
     <div class="user-row">
       <div class="user-avatar">${(u.name||'?')[0].toUpperCase()}</div>
-      <div>
-        <span class="user-name">${esc(u.name||'Аноним')}</span>
-        ${u.me?'<span class="user-you">(ты)</span>':''}
-        ${u.host?'<span class="user-host-badge">хост</span>':''}
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+          <span class="user-name">${esc(u.name||'Аноним')}</span>
+          ${u.me?'<span class="user-you">(ты)</span>':''}
+          ${u.host?'<span class="user-host-badge">хост</span>':''}
+        </div>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:2px">⏱ ${fmt(u.tm)}</div>
       </div>
       ${connected||u.me?'<div class="user-online"></div>':''}
     </div>`).join('');
@@ -394,9 +397,7 @@ function wireConn(asHost){
   conn.on('data',handleData);
   conn.on('open',function(){
     connected=true;setStatus(true);
-    // Send hello with our name
     send({t:'hello',name:myName,host:asHost});
-    // If host and video is loaded — sync state to guest
     if(asHost&&currentUrl){
       setTimeout(()=>{
         const tm=getCurrentTime();
@@ -404,8 +405,16 @@ function wireConn(asHost){
         send({t:'sync',url:currentUrl,tm,playing});
       },600);
     }
+    // Periodic hard-sync: every 3s broadcast my time; if diff > 1.5s — correct
+    if(syncIv)clearInterval(syncIv);
+    syncIv=setInterval(()=>{
+      const ct=getCurrentTime();
+      myTime=ct;
+      send({t:'time',tm:ct});
+      updateUsers();
+    },3000);
   });
-  conn.on('close',function(){connected=false;setStatus(false);peerName='';updateUsers();toast('Соединение прервано…');});
+  conn.on('close',function(){connected=false;setStatus(false);peerName='';peerTime=0;updateUsers();if(syncIv){clearInterval(syncIv);syncIv=null;}toast('Соединение прервано…');});
   conn.on('error',function(){connected=false;setStatus(false);peerName='';updateUsers();});
 }
 
@@ -421,12 +430,10 @@ function handleData(d){
     case'hello':
       peerName=d.name||'Аноним';
       updateUsers();
-      toast('♥ '+(d.host?'Хост':'')+(peerName)+' в комнате!');
-      // Guest: if host sends hello, reply with our hello too
+      toast('♥ '+(peerName)+' в комнате!');
       if(!d.host)send({t:'hello',name:myName,host:false});
       break;
     case'sync':
-      // Host is syncing state to guest on join
       if(d.url&&!currentUrl){
         loadVideo(d.url,false,()=>{
           setTimeout(()=>{
@@ -438,9 +445,31 @@ function handleData(d){
       }
       break;
     case'url':loadVideo(d.url,false);break;
-    case'play':syncing=true;remotePlay(d.tm);pill('▶ Воспроизводит');setTimeout(()=>{syncing=false;},600);break;
-    case'pause':syncing=true;remotePause(d.tm);pill('⏸ Пауза');setTimeout(()=>{syncing=false;},600);break;
+    case'play':
+      syncing=true;
+      // Hard seek to sender's exact time, then play
+      remoteHardSync(d.tm,true);
+      pill('▶ Воспроизводит');
+      setTimeout(()=>{syncing=false;},800);
+      break;
+    case'pause':
+      syncing=true;
+      remoteHardSync(d.tm,false);
+      pill('⏸ Пауза');
+      setTimeout(()=>{syncing=false;},800);
+      break;
     case'seek':syncing=true;remoteSeek(d.tm);setTimeout(()=>{syncing=false;},600);break;
+    case'time':
+      peerTime=d.tm||0;
+      updateUsers();
+      // If difference > 2s and video is playing, auto-correct silently
+      if(!syncing){
+        const myT=getCurrentTime();
+        if(Math.abs(myT-d.tm)>2&&isPlaying()){
+          syncing=true;remoteSeek(d.tm);setTimeout(()=>{syncing=false;},600);
+        }
+      }
+      break;
     case'reaction':showReaction(d.emoji,false);break;
   }
 }
@@ -456,6 +485,17 @@ function remotePause(t){
 function remoteSeek(t){
   if(vidType==='yt'&&ytPlayer){try{ytPlayer.seekTo(t,true);}catch(e){}}
   else if(vidType==='direct'&&dirVid){dirVid.currentTime=t;}
+}
+function remoteHardSync(t,shouldPlay){
+  if(vidType==='yt'&&ytPlayer){
+    try{
+      ytPlayer.seekTo(t,true);
+      if(shouldPlay)ytPlayer.playVideo();else ytPlayer.pauseVideo();
+    }catch(e){}
+  } else if(vidType==='direct'&&dirVid){
+    dirVid.currentTime=t;
+    if(shouldPlay)dirVid.play().catch(()=>{});else dirVid.pause();
+  }
 }
 
 function getCurrentTime(){
@@ -657,7 +697,7 @@ function loadDirect(url){
   v.addEventListener('play',()=>{if(!syncing)send({t:'play',tm:v.currentTime});document.getElementById('ppb').textContent='⏸';});
   v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
   v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
-  v.addEventListener('timeupdate',updProg);
+  v.addEventListener('timeupdate',()=>{updProg();myTime=v.currentTime;});
   v.play().catch(()=>{});
 }
 
