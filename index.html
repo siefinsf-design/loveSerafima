@@ -40,6 +40,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .bp:active{transform:translateY(0);}
 .bg{background:transparent;color:var(--rose);border:1px solid var(--border);margin-top:9px;}
 .bg:hover{background:var(--glow);border-color:var(--rose);}
+.tgbtn{background:linear-gradient(135deg,#1a6fa8,#2088cc);color:#fff;box-shadow:0 4px 20px rgba(32,136,204,.35);text-decoration:none;margin-top:0;}
+.tgbtn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(32,136,204,.55);}
 input[type=text]{width:100%;padding:13px 18px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Jost',sans-serif;font-size:.94rem;outline:none;transition:border-color .25s,box-shadow .25s;}
 input[type=text]:focus{border-color:var(--rose);box-shadow:0 0 0 3px var(--glow);}
 input[type=text]::placeholder{color:var(--muted);}
@@ -200,7 +202,7 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
   <div class="logo-wrap">
     <span class="lheart">♥</span>
     <div class="ltitle">Я люблю Серафиму</div>
-    <div class="lsub">вместе смотрим · любим друг друга</div>
+    <div class="lsub">вместе смотрим · вместе чувствуем</div>
   </div>
 
   <div class="card">
@@ -222,6 +224,13 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
         maxlength="6" autocomplete="off" spellcheck="false"
         style="text-align:center;letter-spacing:7px;font-size:1.2rem;text-transform:uppercase;margin-bottom:10px">
       <button class="btn bp" onclick="joinRoom()">Войти ♥</button>
+    </div>
+
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--border);">
+      <a href="https://t.me/serafimalove_bot" target="_blank" class="btn tgbtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.653l-1.746 8.23c-.13.578-.47.719-.953.447l-2.627-1.936-1.269 1.22c-.14.14-.258.258-.528.258l.188-2.676 4.874-4.403c.212-.188-.046-.293-.328-.105L7.93 14.318l-2.56-.799c-.557-.174-.568-.557.116-.824l9.993-3.854c.464-.168.87.113.45.812z" fill="currentColor"/></svg>
+        Сюрприз для Серафимы ♥
+      </a>
     </div>
   </div>
 </div>
@@ -291,10 +300,9 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
       <button class="rbtn" onclick="sendReaction('🥺')">🥺</button>
       <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
       <button class="rbtn" onclick="sendReaction('💋')">💋</button>
-      <button class="rbtn" onclick="sendReaction('люблю тебя очень')">💌</button>
     </div>
   </div>
-  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя самая лучшая девочка на земле</div>
+  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя самая лучшая девочка на свете!</div>
 </div>
 
 <script>
@@ -336,6 +344,83 @@ let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
 let dirVid=null,syncing=false,tTmr=null,pTmr=null;
 let myName='',peerName='',currentUrl='';
 let myTime=0,peerTime=0,syncIv=null;
+let rafId=null; // requestAnimationFrame для мобильного трекинга времени
+let vkFrame=null,vkCurrentTime=0,vkPlaying=false; // VK postMessage API
+
+/* ─── МОБИЛЬНЫЙ ТРЕКИНГ ВРЕМЕНИ ─── */
+// Обновляем myTime через rAF — работает даже когда setInterval тормозит на мобиле
+function startRafTimeTrack(){
+  if(rafId)cancelAnimationFrame(rafId);
+  function tick(){
+    const ct=getCurrentTime();
+    if(ct>0){myTime=ct;}
+    rafId=requestAnimationFrame(tick);
+  }
+  rafId=requestAnimationFrame(tick);
+}
+function stopRafTimeTrack(){
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+}
+
+// Когда вкладка снова становится видимой — сразу синхронизируем время
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden){
+    const ct=getCurrentTime();
+    if(ct>0){
+      myTime=ct;
+      if(connected)send({t:'time',tm:ct});
+      updateUsers();
+    }
+  }
+});
+
+/* ─── VK postMessage API ─── */
+// VK video_ext.php отправляет события через postMessage; мы их перехватываем
+// и транслируем партнёру, а также принимаем команды для управления плеером.
+window.addEventListener('message',function(e){
+  if(vidType!=='vk'&&vidType!=='vk-direct')return;
+  let d;
+  try{d=typeof e.data==='string'?JSON.parse(e.data):e.data;}catch(x){return;}
+  if(!d||d.handler!=='videoplayer')return;
+
+  const tm=d.time!=null?d.time:vkCurrentTime;
+  if(d.action==='inited'){
+    // плеер готов — включаем API-режим
+    vkSend({api:1});
+  }
+  if(d.action==='timeupdate'||d.time!=null){
+    vkCurrentTime=tm;myTime=tm;
+    updVkProg();
+  }
+  if(d.action==='play'){
+    vkPlaying=true;vkCurrentTime=tm;myTime=tm;
+    document.getElementById('ppb').textContent='⏸';
+    if(!syncing)send({t:'play',tm});
+  }
+  if(d.action==='pause'){
+    vkPlaying=false;vkCurrentTime=tm;myTime=tm;
+    document.getElementById('ppb').textContent='▶';
+    if(!syncing)send({t:'pause',tm});
+  }
+  if(d.action==='seek'){
+    vkCurrentTime=tm;myTime=tm;
+    if(!syncing)send({t:'seek',tm});
+  }
+});
+
+function vkSend(obj){
+  if(!vkFrame)return;
+  try{vkFrame.contentWindow.postMessage(obj,'*');}catch(x){}
+}
+function vkCmd(method,value){
+  const msg={method};
+  if(value!=null)msg.value=value;
+  vkSend(msg);
+}
+function updVkProg(){
+  // прогресс-бар для VK — длительность неизвестна, показываем только время
+  document.getElementById('tt').textContent=fmt(vkCurrentTime)+' / --:--';
+}
 
 /* ─── USERS PANEL ─── */
 let panelOpen=false;
@@ -561,14 +646,17 @@ function handleData(d){
 function remotePlay(t){
   if(vidType==='yt'&&ytPlayer){try{if(Math.abs(ytPlayer.getCurrentTime()-t)>2.5)ytPlayer.seekTo(t,true);ytPlayer.playVideo();}catch(e){}}
   else if(vidType==='direct'&&dirVid){if(Math.abs(dirVid.currentTime-t)>2.5)dirVid.currentTime=t;dirVid.play().catch(()=>{});}
+  else if(vidType==='vk'||vidType==='vk-direct'){if(Math.abs(vkCurrentTime-t)>2.5)vkCmd('seek',Math.floor(t));vkCmd('play');}
 }
 function remotePause(t){
   if(vidType==='yt'&&ytPlayer){try{ytPlayer.pauseVideo();if(Math.abs(ytPlayer.getCurrentTime()-t)>2.5)ytPlayer.seekTo(t,true);}catch(e){}}
   else if(vidType==='direct'&&dirVid){dirVid.pause();if(Math.abs(dirVid.currentTime-t)>2.5)dirVid.currentTime=t;}
+  else if(vidType==='vk'||vidType==='vk-direct'){vkCmd('pause');if(Math.abs(vkCurrentTime-t)>2.5)vkCmd('seek',Math.floor(t));}
 }
 function remoteSeek(t){
   if(vidType==='yt'&&ytPlayer){try{ytPlayer.seekTo(t,true);}catch(e){}}
   else if(vidType==='direct'&&dirVid){dirVid.currentTime=t;}
+  else if(vidType==='vk'||vidType==='vk-direct'){vkCmd('seek',Math.floor(t));}
 }
 function remoteHardSync(t,shouldPlay){
   if(vidType==='yt'&&ytPlayer){
@@ -579,17 +667,22 @@ function remoteHardSync(t,shouldPlay){
   } else if(vidType==='direct'&&dirVid){
     dirVid.currentTime=t;
     if(shouldPlay)dirVid.play().catch(()=>{});else dirVid.pause();
+  } else if(vidType==='vk'||vidType==='vk-direct'){
+    vkCmd('seek',Math.floor(t));
+    if(shouldPlay)vkCmd('play');else vkCmd('pause');
   }
 }
 
 function getCurrentTime(){
   if(vidType==='yt'&&ytPlayer){try{return ytPlayer.getCurrentTime();}catch(e){}}
   if(vidType==='direct'&&dirVid)return dirVid.currentTime;
+  if(vidType==='vk'||vidType==='vk-direct')return vkCurrentTime;
   return 0;
 }
 function isPlaying(){
   if(vidType==='yt'&&ytPlayer){try{return ytPlayer.getPlayerState()===1;}catch(e){}}
   if(vidType==='direct'&&dirVid)return !dirVid.paused;
+  if(vidType==='vk'||vidType==='vk-direct')return vkPlaying;
   return false;
 }
 
@@ -697,6 +790,8 @@ function showExtractLoader(on){
 function clearPlayer(){
   if(ytIv){clearInterval(ytIv);ytIv=null;}
   if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
+  stopRafTimeTrack();
+  vkFrame=null;vkCurrentTime=0;vkPlaying=false;
   const vo=document.getElementById('vo');
   vo.querySelectorAll('iframe,video').forEach(el=>el.remove());
   const d=document.getElementById('ytd');if(d)d.remove();
@@ -735,29 +830,44 @@ function onYtSt(e){
 }
 function startYtTr(){
   stopYtTr();lastYtT=ytPlayer?ytPlayer.getCurrentTime():0;
+  startRafTimeTrack(); // мобильный трекинг для YT тоже
   ytIv=setInterval(()=>{
     if(!ytPlayer)return;
     try{const ct=ytPlayer.getCurrentTime();if(!syncing&&Math.abs(ct-lastYtT)>3)send({t:'seek',tm:ct});lastYtT=ct;}catch(e){}
   },1000);
 }
-function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}}
+function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}stopRafTimeTrack();}
 
 /* ── VK ── */
 function loadVK(oid,vid,tm){
+  vkFrame=null;vkCurrentTime=tm||0;vkPlaying=false;
   const fr=document.createElement('iframe');
   fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
-  let src='https://vk.com/video_ext.php?oid='+oid+'&id='+vid+'&hd=2&autoplay=1';
+  let src='https://vk.com/video_ext.php?oid='+oid+'&id='+vid+'&hd=2&autoplay=1&js_api=1';
   if(tm)src+='&t='+Math.floor(tm);
   fr.src=src;
   fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
   document.getElementById('vo').appendChild(fr);
-  toast('VK: управление через кнопки плеера');
+  vkFrame=fr;
+  // Показываем контрол-бар с ⏯ и временем (seek недоступен без длительности)
+  document.getElementById('vc').classList.add('on');
+  // Активируем JS API после загрузки плеера
+  fr.addEventListener('load',()=>{
+    setTimeout(()=>vkSend({api:1}),800);
+  });
+  toast('VK: синхронизация через API ♥');
 }
 function loadVKEmbed(url){
+  vkFrame=null;vkCurrentTime=0;vkPlaying=false;
   const fr=document.createElement('iframe');
   fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
-  fr.src=url;fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
+  // Добавляем js_api=1 если не стоит
+  const u=url.includes('js_api')?url:url+(url.includes('?')?'&':'?')+'js_api=1';
+  fr.src=u;fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
   document.getElementById('vo').appendChild(fr);
+  vkFrame=fr;
+  document.getElementById('vc').classList.add('on');
+  fr.addEventListener('load',()=>{setTimeout(()=>vkSend({api:1}),800);});
 }
 
 /* ── Rutube ── */
@@ -782,11 +892,26 @@ function loadDirect(url){
   v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
   v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
   v.addEventListener('timeupdate',()=>{updProg();myTime=v.currentTime;});
+  // iOS: нативный плеер — ловим выход из фуллскрина чтобы синхронизировать время
+  v.addEventListener('webkitendfullscreen',()=>{
+    myTime=v.currentTime;
+    if(connected)send({t:'time',tm:v.currentTime});
+    updateUsers();
+  });
+  v.addEventListener('webkitbeginfullscreen',()=>{
+    // запускаем агрессивный трекинг пока открыт нативный плеер
+    startRafTimeTrack();
+  });
+  startRafTimeTrack();
   v.play().catch(()=>{});
 }
 
 /* ─── CONTROLS ─── */
-function togglePP(){if(!dirVid)return;dirVid.paused?dirVid.play().catch(()=>{}):dirVid.pause();}
+function togglePP(){
+  if(vidType==='direct'&&dirVid){dirVid.paused?dirVid.play().catch(()=>{}):dirVid.pause();}
+  else if(vidType==='vk'||vidType==='vk-direct'){vkPlaying?vkCmd('pause'):vkCmd('play');}
+  else if(vidType==='yt'&&ytPlayer){try{ytPlayer.getPlayerState()===1?ytPlayer.pauseVideo():ytPlayer.playVideo();}catch(x){}}
+}
 function seekClick(e){
   if(!dirVid||!dirVid.duration)return;
   const r=document.getElementById('pg').getBoundingClientRect();
