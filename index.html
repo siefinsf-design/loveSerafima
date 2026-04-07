@@ -362,9 +362,13 @@ function stopRafTimeTrack(){
   if(rafId){cancelAnimationFrame(rafId);rafId=null;}
 }
 
-// Когда вкладка снова становится видимой — сразу синхронизируем время
+// Когда вкладка снова становится видимой — переподключаем peer и синхронизируем время
 document.addEventListener('visibilitychange',function(){
   if(!document.hidden){
+    // Если peer отвалился (телефон был в фоне) — сразу переподключаем
+    if(peer&&peer.disconnected){
+      try{peer.reconnect();}catch(x){}
+    }
     const ct=getCurrentTime();
     if(ct>0){
       myTime=ct;
@@ -565,7 +569,20 @@ function initPeer(id,onOpen){
       initPeer('sera-'+code,function(){show('sc-waiting');});
       peer.on('connection',function(c){conn=c;wireConn(true);show('sc-player');toast('♥ Соединение установлено!');});
     } else if(e.type==='peer-unavailable'){
-      toast('Комната не найдена. Проверь код.');
+      // Иногда хост временно недоступен (мобильная сеть, фон) — делаем повтор
+      if(!peer._joinRetry)peer._joinRetry=0;
+      if(peer._joinRetry<4){
+        peer._joinRetry++;
+        toast('Подключаемся… попытка '+peer._joinRetry+'/4');
+        setTimeout(()=>{
+          if(conn)try{conn.close();}catch(x){}
+          conn=peer.connect('sera-'+document.getElementById('jin').value.trim().toUpperCase(),{reliable:true,serialization:'json'});
+          wireConn(false);
+        },2500);
+      } else {
+        peer._joinRetry=0;
+        toast('Комната не найдена. Проверь код.');
+      }
     } else if(e.type==='network'||e.type==='disconnected'||e.type==='server-error'){
       toast('⚠️ Ошибка сети. Попробуй обновить страницу.');
     } else {
@@ -582,6 +599,7 @@ function wireConn(asHost){
   conn.on('data',handleData);
   conn.on('open',function(){
     connected=true;setStatus(true);
+    if(peer)peer._joinRetry=0;
     send({t:'hello',name:myName,host:asHost});
     // Переключаем экран — и для хоста (когда гость подключился) и для гостя
     if(!asHost){show('sc-player');toast('♥ Подключилась к комнате!');}
@@ -620,7 +638,7 @@ function handleData(d){
       peerName=d.name||'Аноним';
       updateUsers();
       toast('♥ '+(peerName)+' в комнате!');
-      if(!d.host)send({t:'hello',name:myName,host:false});
+      if(!d.host)send({t:'hello',name:myName,host:isHost});
       break;
     case'sync':
       if(d.url&&!currentUrl){
