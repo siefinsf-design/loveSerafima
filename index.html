@@ -206,7 +206,7 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
   </div>
 
   <div class="card">
-    <div class="ct">Вечер с любимой</div>
+    <div class="ct">Вечер с любимой)</div>
     <p class="cs">Введи своё имя и создай комнату — поделись кодом с любимой, она войдёт и вы начнёте смотреть вместе ♥</p>
 
     <div class="name-wrap">
@@ -528,8 +528,7 @@ function joinRoom(){
   initPeer(undefined,function(){
     conn=peer.connect('sera-'+code,{reliable:true,serialization:'json'});
     wireConn(false);
-    conn.on('open',function(){show('sc-player');toast('♥ Подключилась к комнате!');});
-    conn.on('error',function(){toast('Не удалось подключиться. Проверь код.');});
+    // show player и toast теперь внутри wireConn через onReady callback
   });
 }
 
@@ -541,20 +540,37 @@ function copyCode(){
 /* ─── PEER ─── */
 function initPeer(id,onOpen){
   const iceServers=[
-    {urls:'stun:stun.cloudflare.com:3478'},
-    {urls:'stun:global.stun.twilio.com:3478'},
+    {urls:'stun:stun.l.google.com:19302'},
     {urls:'stun:stun1.l.google.com:19302'},
-    {urls:'stun:stun.stunprotocol.org:3478'}
+    {urls:'stun:stun2.l.google.com:19302'},
+    {urls:'stun:stun.cloudflare.com:3478'},
+    // Бесплатный публичный TURN — помогает при жёстком NAT и мобильном интернете
+    {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
+    {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
+    {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
   ];
-  const cfg={host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0,config:{iceServers}};
+  const cfg={
+    host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0,
+    config:{iceServers,iceCandidatePoolSize:10}
+  };
+  if(peer){try{peer.destroy();}catch(x){}}
   peer=id?new Peer(id,cfg):new Peer(cfg);
   peer.on('open',onOpen||function(){});
   peer.on('error',function(e){
-    if(e.type==='unavailable-id'&&id){peer.destroy();createRoom();}
-    else if(e.type==='network'||e.type==='disconnected'||e.type==='server-error'){
-      toast('⚠️ Ошибка сети. Если ты в России — включи VPN и обнови страницу');
+    if(e.type==='unavailable-id'&&id){
+      // код занят — генерируем новый
+      peer.destroy();
+      const code=mkCode();
+      document.getElementById('cd').textContent=code;
+      initPeer('sera-'+code,function(){show('sc-waiting');});
+      peer.on('connection',function(c){conn=c;wireConn(true);show('sc-player');toast('♥ Соединение установлено!');});
+    } else if(e.type==='peer-unavailable'){
+      toast('Комната не найдена. Проверь код.');
+    } else if(e.type==='network'||e.type==='disconnected'||e.type==='server-error'){
+      toast('⚠️ Ошибка сети. Попробуй обновить страницу.');
+    } else {
+      toast('Ошибка соединения: '+e.type);
     }
-    else toast('Ошибка: '+e.type);
   });
   peer.on('disconnected',function(){
     connected=false;setStatus(false);updateUsers();
@@ -567,6 +583,8 @@ function wireConn(asHost){
   conn.on('open',function(){
     connected=true;setStatus(true);
     send({t:'hello',name:myName,host:asHost});
+    // Переключаем экран — и для хоста (когда гость подключился) и для гостя
+    if(!asHost){show('sc-player');toast('♥ Подключилась к комнате!');}
     if(asHost&&currentUrl){
       setTimeout(()=>{
         const tm=getCurrentTime();
@@ -574,7 +592,6 @@ function wireConn(asHost){
         send({t:'sync',url:currentUrl,tm,playing});
       },600);
     }
-    // Periodic hard-sync: every 3s broadcast my time; if diff > 1.5s — correct
     if(syncIv)clearInterval(syncIv);
     syncIv=setInterval(()=>{
       const ct=getCurrentTime();
@@ -584,7 +601,10 @@ function wireConn(asHost){
     },3000);
   });
   conn.on('close',function(){connected=false;setStatus(false);peerName='';peerTime=0;updateUsers();if(syncIv){clearInterval(syncIv);syncIv=null;}toast('Соединение прервано…');});
-  conn.on('error',function(){connected=false;setStatus(false);peerName='';updateUsers();});
+  conn.on('error',function(err){
+    connected=false;setStatus(false);peerName='';updateUsers();
+    toast('Не удалось подключиться. Проверь код и попробуй снова.');
+  });
 }
 
 function send(d){if(conn&&conn.open)conn.send(d);}
