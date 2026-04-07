@@ -200,11 +200,11 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
   <div class="logo-wrap">
     <span class="lheart">♥</span>
     <div class="ltitle">Я люблю Серафиму</div>
-    <div class="lsub">вместе смотрим · вместе чувствуем</div>
+    <div class="lsub">вместе смотрим · любим друг друга</div>
   </div>
 
   <div class="card">
-    <div class="ct">Романтический вечер</div>
+    <div class="ct">Вечер с любимой</div>
     <p class="cs">Введи своё имя и создай комнату — поделись кодом с любимой, она войдёт и вы начнёте смотреть вместе ♥</p>
 
     <div class="name-wrap">
@@ -229,14 +229,14 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
 <!-- ════ WAITING ════ -->
 <div class="screen" id="sc-waiting">
   <span class="lheart" style="font-size:3rem">♥</span>
-  <div class="wtit">Ждём Серафиму…</div>
+  <div class="wtit">Ждём Любимую…</div>
   <p class="wsub">Поделись кодом с любимой</p>
   <div class="cbox" onclick="copyCode()" title="Нажми чтобы скопировать">
     <div class="ctext" id="cd">——</div>
   </div>
   <div class="chint">нажми чтобы скопировать ♥</div>
   <div class="dots"><span></span><span></span><span></span></div>
-  <p style="font-size:.79rem;color:var(--muted)">Как только она войдёт — начнём ♥</p>
+  <p style="font-size:.79rem;color:var(--muted)">Как только он(а) войдёт — начнём ♥</p>
 </div>
 
 <!-- ════ PLAYER ════ -->
@@ -291,9 +291,10 @@ body{position:fixed;width:100%;height:100%;overflow:hidden;}
       <button class="rbtn" onclick="sendReaction('🥺')">🥺</button>
       <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
       <button class="rbtn" onclick="sendReaction('💋')">💋</button>
+      <button class="rbtn" onclick="sendReaction('люблю тебя очень')">💌</button>
     </div>
   </div>
-  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя Серафима — самая лучшая</div>
+  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя самая лучшая девочка на земле</div>
 </div>
 
 <script>
@@ -335,34 +336,6 @@ let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
 let dirVid=null,syncing=false,tTmr=null,pTmr=null;
 let myName='',peerName='',currentUrl='';
 let myTime=0,peerTime=0,syncIv=null;
-let rafId=null; // requestAnimationFrame для мобильного трекинга времени
-
-/* ─── МОБИЛЬНЫЙ ТРЕКИНГ ВРЕМЕНИ ─── */
-// Обновляем myTime через rAF — работает даже когда setInterval тормозит на мобиле
-function startRafTimeTrack(){
-  if(rafId)cancelAnimationFrame(rafId);
-  function tick(){
-    const ct=getCurrentTime();
-    if(ct>0){myTime=ct;}
-    rafId=requestAnimationFrame(tick);
-  }
-  rafId=requestAnimationFrame(tick);
-}
-function stopRafTimeTrack(){
-  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
-}
-
-// Когда вкладка снова становится видимой — сразу синхронизируем время
-document.addEventListener('visibilitychange',function(){
-  if(!document.hidden){
-    const ct=getCurrentTime();
-    if(ct>0){
-      myTime=ct;
-      if(connected)send({t:'time',tm:ct});
-      updateUsers();
-    }
-  }
-});
 
 /* ─── USERS PANEL ─── */
 let panelOpen=false;
@@ -724,7 +697,6 @@ function showExtractLoader(on){
 function clearPlayer(){
   if(ytIv){clearInterval(ytIv);ytIv=null;}
   if(ytPlayer){try{ytPlayer.destroy();}catch(e){}ytPlayer=null;}
-  stopRafTimeTrack();
   const vo=document.getElementById('vo');
   vo.querySelectorAll('iframe,video').forEach(el=>el.remove());
   const d=document.getElementById('ytd');if(d)d.remove();
@@ -763,13 +735,12 @@ function onYtSt(e){
 }
 function startYtTr(){
   stopYtTr();lastYtT=ytPlayer?ytPlayer.getCurrentTime():0;
-  startRafTimeTrack(); // мобильный трекинг для YT тоже
   ytIv=setInterval(()=>{
     if(!ytPlayer)return;
     try{const ct=ytPlayer.getCurrentTime();if(!syncing&&Math.abs(ct-lastYtT)>3)send({t:'seek',tm:ct});lastYtT=ct;}catch(e){}
   },1000);
 }
-function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}stopRafTimeTrack();}
+function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}}
 
 /* ── VK ── */
 function loadVK(oid,vid,tm){
@@ -811,17 +782,6 @@ function loadDirect(url){
   v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
   v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
   v.addEventListener('timeupdate',()=>{updProg();myTime=v.currentTime;});
-  // iOS: нативный плеер — ловим выход из фуллскрина чтобы синхронизировать время
-  v.addEventListener('webkitendfullscreen',()=>{
-    myTime=v.currentTime;
-    if(connected)send({t:'time',tm:v.currentTime});
-    updateUsers();
-  });
-  v.addEventListener('webkitbeginfullscreen',()=>{
-    // запускаем агрессивный трекинг пока открыт нативный плеер
-    startRafTimeTrack();
-  });
-  startRafTimeTrack();
   v.play().catch(()=>{});
 }
 
