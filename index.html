@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>♥ Я люблю Серафиму ♥</title>
+<title>в™Ґ РЇ Р»СЋР±Р»СЋ РЎРµСЂР°С„РёРјСѓ в™Ґ</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 <style>
@@ -22,7 +22,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .screen{display:none;position:fixed;inset:0;z-index:1;min-height:100dvh;}
 .screen.active{display:flex;}
 
-/* ── CONNECT ── */
+/* в”Ђв”Ђ CONNECT в”Ђв”Ђ */
 #sc-connect{min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;}
 .logo-wrap{margin-bottom:44px;user-select:none;}
 .lheart{font-size:clamp(3.5rem,9vw,6rem);display:block;line-height:1;margin-bottom:14px;filter:drop-shadow(0 0 30px var(--red));animation:hb 2s ease-in-out infinite;}
@@ -58,7 +58,7 @@ input[type=text]::placeholder{color:var(--muted);}
 .name-wrap{margin-bottom:22px;}
 .name-label{font-size:.73rem;color:var(--muted);font-weight:300;margin-bottom:7px;text-align:left;display:block;}
 
-/* ── WAITING ── */
+/* в”Ђв”Ђ WAITING в”Ђв”Ђ */
 #sc-waiting{min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:0;}
 .wtit{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.3rem);color:var(--pink);margin:12px 0 5px;}
 .wsub{font-size:.8rem;color:var(--muted);font-weight:300;}
@@ -71,7 +71,7 @@ input[type=text]::placeholder{color:var(--muted);}
 .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
 @keyframes dp{0%,80%,100%{transform:scale(.45);opacity:.25}40%{transform:scale(1.1);opacity:1}}
 
-/* ── PLAYER ── */
+/* в”Ђв”Ђ PLAYER в”Ђв”Ђ */
 #sc-player{flex-direction:column;min-height:100dvh;}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(6,6,10,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-shrink:0;gap:12px;}
 .tblogo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;background:linear-gradient(135deg,var(--red),var(--rose),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
@@ -80,7 +80,7 @@ input[type=text]::placeholder{color:var(--muted);}
 .sdot.off{background:var(--red);box-shadow:0 0 8px var(--red);}
 @keyframes sdp{0%,100%{opacity:1}50%{opacity:.35}}
 
-/* ── USERS PANEL ── */
+/* в”Ђв”Ђ USERS PANEL в”Ђв”Ђ */
 .users-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 12px;border-radius:50px;background:var(--bg3);border:1px solid var(--border);font-size:.73rem;color:var(--muted);transition:all .2s;flex-shrink:0;position:relative;}
 .users-toggle:hover{border-color:var(--rose);color:var(--pink);}
 .users-toggle .ucnt{font-size:.85rem;font-weight:600;color:var(--rose);}
@@ -96,7 +96,7 @@ input[type=text]::placeholder{color:var(--muted);}
 .user-host-badge{font-size:.6rem;background:rgba(214,43,82,.2);color:var(--rose);padding:2px 7px;border-radius:10px;border:1px solid rgba(214,43,82,.3);}
 .user-online{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);margin-left:auto;flex-shrink:0;}
 
-/* ── PLAYER AREA ── */
+/* в”Ђв”Ђ PLAYER AREA в”Ђв”Ђ */
 .pwrap{flex:1;display:flex;flex-direction:column;padding:16px 20px 20px;max-width:1200px;width:100%;margin:0 auto;}
 .ubar{display:flex;gap:10px;margin-bottom:14px;align-items:stretch;}
 .ubar input{flex:1;padding:12px 20px;border-radius:50px;background:var(--bg2);font-size:.87rem;}
@@ -121,14 +121,14 @@ input[type=text]::placeholder{color:var(--muted);}
 .pf::after{content:'';position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--red);}
 .ttxt{font-size:.75rem;color:var(--muted);white-space:nowrap;flex-shrink:0;}
 
-/* ── REACTIONS ── */
+/* в”Ђв”Ђ REACTIONS в”Ђв”Ђ */
 .react-bar{display:flex;gap:8px;padding:10px 0 3px;align-items:center;}
 .rbtn{background:none;border:1px solid var(--border);border-radius:50px;padding:5px 12px;font-size:1rem;cursor:pointer;transition:all .2s;color:var(--text);}
 .rbtn:hover{border-color:var(--rose);transform:scale(1.15);background:var(--glow);}
 .react-float{position:fixed;pointer-events:none;font-size:2.5rem;z-index:9997;animation:floatUp 1.8s ease-out forwards;}
 @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}80%{opacity:.8;transform:translateY(-140px) scale(1.15)}100%{opacity:0;transform:translateY(-200px) scale(.8)}}
 
-/* ── EXTRACT LOADER ── */
+/* в”Ђв”Ђ EXTRACT LOADER в”Ђв”Ђ */
 .extract-overlay{position:absolute;inset:0;background:rgba(6,6,10,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:10;border-radius:18px;}
 .extract-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--rose);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -137,7 +137,7 @@ input[type=text]::placeholder{color:var(--muted);}
 .lfoot{text-align:center;padding:13px 16px;font-size:.71rem;color:var(--muted);border-top:1px solid rgba(214,43,82,.1);flex-shrink:0;font-weight:300;letter-spacing:.5px;}
 .lfoot span{color:var(--rose);}
 
-/* ── TOAST & PILL ── */
+/* в”Ђв”Ђ TOAST & PILL в”Ђв”Ђ */
 .toast{position:fixed;top:18px;right:18px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:11px 18px;font-size:.79rem;z-index:9999;transform:translateX(calc(100% + 30px));transition:transform .35s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 6px 30px rgba(0,0,0,.6);max-width:280px;pointer-events:none;}
 .toast.on{transform:translateX(0);}
 .pill{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(214,43,82,.92);color:#fff;padding:10px 22px;border-radius:50px;font-size:.79rem;font-weight:500;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);z-index:9998;backdrop-filter:blur(8px);box-shadow:0 4px 20px rgba(214,43,82,.5);pointer-events:none;white-space:nowrap;}
@@ -157,7 +157,7 @@ input[type=text]::placeholder{color:var(--muted);}
   .users-dropdown{right:10px;left:10px;}
 }
 
-/* ── MOBILE FIXES ── */
+/* в”Ђв”Ђ MOBILE FIXES в”Ђв”Ђ */
 html{-webkit-text-size-adjust:100%;}
 button,input{-webkit-appearance:none;appearance:none;touch-action:manipulation;}
 .vouter{-webkit-overflow-scrolling:touch;}
@@ -181,7 +181,7 @@ body{position:relative;width:100%;height:auto;min-height:100dvh;overflow-x:hidde
   .ttxt{font-size:.8rem;}
 }
 
-/* ── LOVE MODAL ── */
+/* в”Ђв”Ђ LOVE MODAL в”Ђв”Ђ */
 .love-overlay{position:fixed;inset:0;background:rgba(6,6,10,.85);backdrop-filter:blur(16px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .35s ease;}
 .love-card{background:var(--bg2);border:1px solid var(--border);border-radius:28px;padding:40px 32px;max-width:380px;width:100%;text-align:center;box-shadow:0 0 120px rgba(214,43,82,.25);position:relative;overflow:hidden;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275);}
 @keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
@@ -207,118 +207,118 @@ body{position:relative;width:100%;height:auto;min-height:100dvh;overflow-x:hidde
 <div class="toast" id="toast"></div>
 <div class="pill" id="pill"></div>
 
-<!-- ════ CONNECT ════ -->
+<!-- в•ђв•ђв•ђв•ђ CONNECT в•ђв•ђв•ђв•ђ -->
 <div class="screen active" id="sc-connect">
   <div class="logo-wrap">
-    <span class="lheart">♥</span>
-    <div class="ltitle">Я люблю Серафиму</div>
-    <div class="lsub">вместе смотрим · вместе чувствуем</div>
+    <span class="lheart">в™Ґ</span>
+    <div class="ltitle">РЇ Р»СЋР±Р»СЋ РЎРµСЂР°С„РёРјСѓ</div>
+    <div class="lsub">РІРјРµСЃС‚Рµ СЃРјРѕС‚СЂРёРј В· РІРјРµСЃС‚Рµ С‡СѓРІСЃС‚РІСѓРµРј</div>
   </div>
 
   <div class="card">
-    <div class="ct">Вечер с любимой)</div>
-    <p class="cs">Введи своё имя и создай комнату — поделись кодом с любимой, она войдёт и вы начнёте смотреть вместе ♥</p>
+    <div class="ct">Р’РµС‡РµСЂ СЃ Р»СЋР±РёРјРѕР№)</div>
+    <p class="cs">Р’РІРµРґРё СЃРІРѕС‘ РёРјСЏ Рё СЃРѕР·РґР°Р№ РєРѕРјРЅР°С‚Сѓ вЂ” РїРѕРґРµР»РёСЃСЊ РєРѕРґРѕРј СЃ Р»СЋР±РёРјРѕР№, РѕРЅР° РІРѕР№РґС‘С‚ Рё РІС‹ РЅР°С‡РЅС‘С‚Рµ СЃРјРѕС‚СЂРµС‚СЊ РІРјРµСЃС‚Рµ в™Ґ</p>
 
     <div class="name-wrap">
-      <span class="name-label">Как тебя зовут?</span>
-      <input type="text" id="ni" placeholder="Твоё имя" maxlength="20" autocomplete="off" spellcheck="false">
+      <span class="name-label">РљР°Рє С‚РµР±СЏ Р·РѕРІСѓС‚?</span>
+      <input type="text" id="ni" placeholder="РўРІРѕС‘ РёРјСЏ" maxlength="20" autocomplete="off" spellcheck="false">
     </div>
 
-    <button class="btn bp" onclick="createRoom()">♥ &nbsp;Создать комнату</button>
-    <div class="divider">или</div>
-    <button class="btn bg join-trigger" id="joinToggleBtn" type="button" aria-expanded="false" aria-controls="jsec" onclick="toggleJoin()">Войти по коду</button>
+    <button class="btn bp" onclick="createRoom()">в™Ґ &nbsp;РЎРѕР·РґР°С‚СЊ РєРѕРјРЅР°С‚Сѓ</button>
+    <div class="divider">РёР»Рё</div>
+    <button class="btn bg join-trigger" id="joinToggleBtn" type="button" aria-expanded="false" aria-controls="jsec" onclick="toggleJoin()">Р’РѕР№С‚Рё РїРѕ РєРѕРґСѓ</button>
     <div class="jsec" id="jsec" aria-hidden="true">
       <div class="join-panel">
-        <div class="join-copy">Введи код комнаты и подключайся сразу, без лишних окон и сломанных переходов.</div>
+        <div class="join-copy">Р’РІРµРґРё РєРѕРґ РєРѕРјРЅР°С‚С‹ Рё РїРѕРґРєР»СЋС‡Р°Р№СЃСЏ СЃСЂР°Р·Сѓ, Р±РµР· Р»РёС€РЅРёС… РѕРєРѕРЅ Рё СЃР»РѕРјР°РЅРЅС‹С… РїРµСЂРµС…РѕРґРѕРІ.</div>
         <input type="text" id="jin"
-          placeholder="Введи 6-значный код"
+          placeholder="Р’РІРµРґРё 6-Р·РЅР°С‡РЅС‹Р№ РєРѕРґ"
           maxlength="6" autocomplete="off" spellcheck="false"
           style="text-align:center;letter-spacing:7px;font-size:1.2rem;text-transform:uppercase;margin-bottom:10px">
-        <button class="btn bp join-submit" id="joinBtn" type="button" onclick="joinRoom()" disabled>Войти ♥</button>
+        <button class="btn bp join-submit" id="joinBtn" type="button" onclick="joinRoom()" disabled>Р’РѕР№С‚Рё в™Ґ</button>
       </div>
     </div>
 
     <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--border);">
       <a href="https://t.me/serafimalove_bot" target="_blank" class="btn tgbtn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.653l-1.746 8.23c-.13.578-.47.719-.953.447l-2.627-1.936-1.269 1.22c-.14.14-.258.258-.528.258l.188-2.676 4.874-4.403c.212-.188-.046-.293-.328-.105L7.93 14.318l-2.56-.799c-.557-.174-.568-.557.116-.824l9.993-3.854c.464-.168.87.113.45.812z" fill="currentColor"/></svg>
-        Сюрприз для Серафимы ♥
+        РЎСЋСЂРїСЂРёР· РґР»СЏ РЎРµСЂР°С„РёРјС‹ в™Ґ
       </a>
     </div>
   </div>
 </div>
 
-<!-- ════ WAITING ════ -->
+<!-- в•ђв•ђв•ђв•ђ WAITING в•ђв•ђв•ђв•ђ -->
 <div class="screen" id="sc-waiting">
-  <span class="lheart" style="font-size:3rem">♥</span>
-  <div class="wtit">Ждём Любимую…</div>
-  <p class="wsub">Поделись кодом с любимой</p>
-  <div class="cbox" onclick="copyCode()" title="Нажми чтобы скопировать">
-    <div class="ctext" id="cd">——</div>
+  <span class="lheart" style="font-size:3rem">в™Ґ</span>
+  <div class="wtit">Р–РґС‘Рј Р›СЋР±РёРјСѓСЋвЂ¦</div>
+  <p class="wsub">РџРѕРґРµР»РёСЃСЊ РєРѕРґРѕРј СЃ Р»СЋР±РёРјРѕР№</p>
+  <div class="cbox" onclick="copyCode()" title="РќР°Р¶РјРё С‡С‚РѕР±С‹ СЃРєРѕРїРёСЂРѕРІР°С‚СЊ">
+    <div class="ctext" id="cd">вЂ”вЂ”</div>
   </div>
-  <div class="chint">нажми чтобы скопировать ♥</div>
+  <div class="chint">РЅР°Р¶РјРё С‡С‚РѕР±С‹ СЃРєРѕРїРёСЂРѕРІР°С‚СЊ в™Ґ</div>
   <div class="dots"><span></span><span></span><span></span></div>
-  <p style="font-size:.79rem;color:var(--muted)">Как только он(а) войдёт — начнём ♥</p>
+  <p style="font-size:.79rem;color:var(--muted)">РљР°Рє С‚РѕР»СЊРєРѕ РѕРЅ(Р°) РІРѕР№РґС‘С‚ вЂ” РЅР°С‡РЅС‘Рј в™Ґ</p>
 </div>
 
-<!-- ════ PLAYER ════ -->
+<!-- в•ђв•ђв•ђв•ђ PLAYER в•ђв•ђв•ђв•ђ -->
 <div class="screen" id="sc-player">
   <div class="topbar">
-    <div class="tblogo">♥ Я люблю Серафиму</div>
+    <div class="tblogo">в™Ґ РЇ Р»СЋР±Р»СЋ РЎРµСЂР°С„РёРјСѓ</div>
 
     <!-- Users toggle -->
     <div class="users-toggle" id="usersToggle" onclick="toggleUsersPanel()">
-      <span>👥</span>
+      <span>рџ‘Ґ</span>
       <span class="ucnt" id="usersCnt">1</span>
-      <span id="usersLabel">участник</span>
+      <span id="usersLabel">СѓС‡Р°СЃС‚РЅРёРє</span>
     </div>
     <div class="users-dropdown" id="usersDropdown">
-      <div class="ud-title">В комнате</div>
+      <div class="ud-title">Р’ РєРѕРјРЅР°С‚Рµ</div>
       <div id="usersList"></div>
     </div>
 
     <div class="tbst">
       <div class="sdot off" id="sdot"></div>
-      <span id="stxt">Соединяемся…</span>
+      <span id="stxt">РЎРѕРµРґРёРЅСЏРµРјСЃСЏвЂ¦</span>
     </div>
   </div>
 
   <div class="pwrap">
     <div class="ubar">
-      <input type="text" id="ui" placeholder="Ссылка на видео (YouTube, VK, .mp4, Rutube ...)">
-      <button class="bgo" id="gobtn" onclick="loadFromInput()">▶ Воспроизвести</button>
+      <input type="text" id="ui" placeholder="РЎСЃС‹Р»РєР° РЅР° РІРёРґРµРѕ (YouTube, VK, .mp4, Rutube ...)">
+      <button class="bgo" id="gobtn" onclick="loadFromInput()">в–¶ Р’РѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё</button>
     </div>
     <div class="vouter" id="vo">
       <div class="vph" id="vph">
-        <span class="phheart">♥</span>
-        <p>Вставь ссылку на видео выше</p>
-        <small>YouTube · VK · Rutube · прямая ссылка .mp4</small>
+        <span class="phheart">в™Ґ</span>
+        <p>Р’СЃС‚Р°РІСЊ СЃСЃС‹Р»РєСѓ РЅР° РІРёРґРµРѕ РІС‹С€Рµ</p>
+        <small>YouTube В· VK В· Rutube В· РїСЂСЏРјР°СЏ СЃСЃС‹Р»РєР° .mp4</small>
       </div>
     </div>
     <div class="vctrl" id="vc">
-      <button class="cb" id="ppb" onclick="togglePP()">▶</button>
+      <button class="cb" id="ppb" onclick="togglePP()">в–¶</button>
       <div class="prog" id="pg" onclick="seekClick(event)" ontouchstart="seekTouch(event)" ontouchmove="seekTouch(event)">
         <div class="pf" id="pf"></div>
         <div class="prog-hit"></div>
       </div>
       <div class="ttxt" id="tt">0:00 / 0:00</div>
-      <button class="cb" onclick="goFS()" title="Полный экран">⛶</button>
+      <button class="cb" onclick="goFS()" title="РџРѕР»РЅС‹Р№ СЌРєСЂР°РЅ">в›¶</button>
     </div>
     <!-- Reactions -->
     <div class="react-bar">
-      <span style="font-size:.72rem;color:var(--muted);margin-right:4px;">реакции:</span>
-      <button class="rbtn" onclick="sendReaction('❤️')">❤️</button>
-      <button class="rbtn" onclick="sendReaction('😂')">😂</button>
-      <button class="rbtn" onclick="sendReaction('😱')">😱</button>
-      <button class="rbtn" onclick="sendReaction('🥺')">🥺</button>
-      <button class="rbtn" onclick="sendReaction('🔥')">🔥</button>
-      <button class="rbtn" onclick="sendReaction('💋')">💋</button>
+      <span style="font-size:.72rem;color:var(--muted);margin-right:4px;">СЂРµР°РєС†РёРё:</span>
+      <button class="rbtn" onclick="sendReaction('вќ¤пёЏ')">вќ¤пёЏ</button>
+      <button class="rbtn" onclick="sendReaction('рџ‚')">рџ‚</button>
+      <button class="rbtn" onclick="sendReaction('рџ±')">рџ±</button>
+      <button class="rbtn" onclick="sendReaction('рџҐє')">рџҐє</button>
+      <button class="rbtn" onclick="sendReaction('рџ”Ґ')">рџ”Ґ</button>
+      <button class="rbtn" onclick="sendReaction('рџ’‹')">рџ’‹</button>
     </div>
   </div>
-  <div class="lfoot">Смотрим с любовью <span>♥</span> Ты моя самая лучшая девочка на свете!</div>
+  <div class="lfoot">РЎРјРѕС‚СЂРёРј СЃ Р»СЋР±РѕРІСЊСЋ <span>в™Ґ</span> РўС‹ РјРѕСЏ СЃР°РјР°СЏ Р»СѓС‡С€Р°СЏ РґРµРІРѕС‡РєР° РЅР° СЃРІРµС‚Рµ!</div>
 </div>
 
 <script>
-/* ─── CANVAS HEARTS ─── */
+/* в”Ђв”Ђв”Ђ CANVAS HEARTS в”Ђв”Ђв”Ђ */
 (function(){
   const c=document.getElementById('cv'),ctx=c.getContext('2d');
   let W,H,pts=[];
@@ -350,22 +350,27 @@ body{position:relative;width:100%;height:auto;min-height:100dvh;overflow-x:hidde
   frame();
 })();
 
-/* ─── STATE ─── */
+/* в”Ђв”Ђв”Ђ STATE в”Ђв”Ђв”Ђ */
 let peer=null,conn=null,connected=false,isHost=false;
 let vidType=null,ytPlayer=null,ytReady=false,ytIv=null,lastYtT=0;
 let dirVid=null,syncing=false,tTmr=null,pTmr=null;
 let myName='',peerName='',currentUrl='';
 let joiningRoom=false;
-let joinConnectTimer=null,joinCode='';
+let joinCode='';
+let joinRetryTimer=null,joinAttemptTimer=null;
 let joinAttempts=0;
-const JOIN_MAX_ATTEMPTS=4;
-const JOIN_ATTEMPT_TIMEOUT=12000;
+let roomPeerOpen=false;
+let connectionNonce='';
+const JOIN_MAX_ATTEMPTS=6;
+const JOIN_RETRY_DELAY=2200;
+const JOIN_ATTEMPT_TIMEOUT=20000;
+const HELLO_TIMEOUT=8000;
 let myTime=0,peerTime=0,syncIv=null;
-let rafId=null; // requestAnimationFrame для мобильного трекинга времени
+let rafId=null; // requestAnimationFrame РґР»СЏ РјРѕР±РёР»СЊРЅРѕРіРѕ С‚СЂРµРєРёРЅРіР° РІСЂРµРјРµРЅРё
 let vkFrame=null,vkCurrentTime=0,vkPlaying=false; // VK postMessage API
 
-/* ─── МОБИЛЬНЫЙ ТРЕКИНГ ВРЕМЕНИ ─── */
-// Обновляем myTime через rAF — работает даже когда setInterval тормозит на мобиле
+/* в”Ђв”Ђв”Ђ РњРћР‘РР›Р¬РќР«Р™ РўР Р•РљРРќР“ Р’Р Р•РњР•РќР в”Ђв”Ђв”Ђ */
+// РћР±РЅРѕРІР»СЏРµРј myTime С‡РµСЂРµР· rAF вЂ” СЂР°Р±РѕС‚Р°РµС‚ РґР°Р¶Рµ РєРѕРіРґР° setInterval С‚РѕСЂРјРѕР·РёС‚ РЅР° РјРѕР±РёР»Рµ
 function startRafTimeTrack(){
   if(rafId)cancelAnimationFrame(rafId);
   function tick(){
@@ -379,10 +384,10 @@ function stopRafTimeTrack(){
   if(rafId){cancelAnimationFrame(rafId);rafId=null;}
 }
 
-// Когда вкладка снова становится видимой — переподключаем peer и синхронизируем время
+// РљРѕРіРґР° РІРєР»Р°РґРєР° СЃРЅРѕРІР° СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РІРёРґРёРјРѕР№ вЂ” РїРµСЂРµРїРѕРґРєР»СЋС‡Р°РµРј peer Рё СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј РІСЂРµРјСЏ
 document.addEventListener('visibilitychange',function(){
   if(!document.hidden){
-    // Если peer отвалился (телефон был в фоне) — сразу переподключаем
+    // Р•СЃР»Рё peer РѕС‚РІР°Р»РёР»СЃСЏ (С‚РµР»РµС„РѕРЅ Р±С‹Р» РІ С„РѕРЅРµ) вЂ” СЃСЂР°Р·Сѓ РїРµСЂРµРїРѕРґРєР»СЋС‡Р°РµРј
     if(peer&&peer.disconnected){
       try{peer.reconnect();}catch(x){}
     }
@@ -395,9 +400,9 @@ document.addEventListener('visibilitychange',function(){
   }
 });
 
-/* ─── VK postMessage API ─── */
-// VK video_ext.php отправляет события через postMessage; мы их перехватываем
-// и транслируем партнёру, а также принимаем команды для управления плеером.
+/* в”Ђв”Ђв”Ђ VK postMessage API в”Ђв”Ђв”Ђ */
+// VK video_ext.php РѕС‚РїСЂР°РІР»СЏРµС‚ СЃРѕР±С‹С‚РёСЏ С‡РµСЂРµР· postMessage; РјС‹ РёС… РїРµСЂРµС…РІР°С‚С‹РІР°РµРј
+// Рё С‚СЂР°РЅСЃР»РёСЂСѓРµРј РїР°СЂС‚РЅС‘СЂСѓ, Р° С‚Р°РєР¶Рµ РїСЂРёРЅРёРјР°РµРј РєРѕРјР°РЅРґС‹ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїР»РµРµСЂРѕРј.
 window.addEventListener('message',function(e){
   if(vidType!=='vk'&&vidType!=='vk-direct')return;
   let d;
@@ -406,7 +411,7 @@ window.addEventListener('message',function(e){
 
   const tm=d.time!=null?d.time:vkCurrentTime;
   if(d.action==='inited'){
-    // плеер готов — включаем API-режим
+    // РїР»РµРµСЂ РіРѕС‚РѕРІ вЂ” РІРєР»СЋС‡Р°РµРј API-СЂРµР¶РёРј
     vkSend({api:1});
   }
   if(d.action==='timeupdate'||d.time!=null){
@@ -415,12 +420,12 @@ window.addEventListener('message',function(e){
   }
   if(d.action==='play'){
     vkPlaying=true;vkCurrentTime=tm;myTime=tm;
-    document.getElementById('ppb').textContent='⏸';
+    document.getElementById('ppb').textContent='вЏё';
     if(!syncing)send({t:'play',tm});
   }
   if(d.action==='pause'){
     vkPlaying=false;vkCurrentTime=tm;myTime=tm;
-    document.getElementById('ppb').textContent='▶';
+    document.getElementById('ppb').textContent='в–¶';
     if(!syncing)send({t:'pause',tm});
   }
   if(d.action==='seek'){
@@ -439,11 +444,11 @@ function vkCmd(method,value){
   vkSend(msg);
 }
 function updVkProg(){
-  // прогресс-бар для VK — длительность неизвестна, показываем только время
+  // РїСЂРѕРіСЂРµСЃСЃ-Р±Р°СЂ РґР»СЏ VK вЂ” РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РЅРµРёР·РІРµСЃС‚РЅР°, РїРѕРєР°Р·С‹РІР°РµРј С‚РѕР»СЊРєРѕ РІСЂРµРјСЏ
   document.getElementById('tt').textContent=fmt(vkCurrentTime)+' / --:--';
 }
 
-/* ─── USERS PANEL ─── */
+/* в”Ђв”Ђв”Ђ USERS PANEL в”Ђв”Ђв”Ђ */
 let panelOpen=false;
 function toggleUsersPanel(){
   panelOpen=!panelOpen;
@@ -461,32 +466,32 @@ function updateUsers(){
   const users=[{name:myName,me:true,host:isHost,tm:myTime}];
   if(connected&&peerName)users.push({name:peerName,me:false,host:!isHost,tm:peerTime});
   cnt.textContent=users.length;
-  lbl.textContent=users.length===1?'участник':'участников';
+  lbl.textContent=users.length===1?'СѓС‡Р°СЃС‚РЅРёРє':'СѓС‡Р°СЃС‚РЅРёРєРѕРІ';
   list.innerHTML=users.map(u=>`
     <div class="user-row">
       <div class="user-avatar">${(u.name||'?')[0].toUpperCase()}</div>
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-          <span class="user-name">${esc(u.name||'Аноним')}</span>
-          ${u.me?'<span class="user-you">(ты)</span>':''}
-          ${u.host?'<span class="user-host-badge">хост</span>':''}
+          <span class="user-name">${esc(u.name||'РђРЅРѕРЅРёРј')}</span>
+          ${u.me?'<span class="user-you">(С‚С‹)</span>':''}
+          ${u.host?'<span class="user-host-badge">С…РѕСЃС‚</span>':''}
         </div>
-        <div style="font-size:.68rem;color:var(--muted);margin-top:2px">⏱ ${fmt(u.tm)}</div>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:2px">вЏ± ${fmt(u.tm)}</div>
       </div>
       ${connected||u.me?'<div class="user-online"></div>':''}
     </div>`).join('');
 }
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-/* ─── YT API ─── */
+/* в”Ђв”Ђв”Ђ YT API в”Ђв”Ђв”Ђ */
 window.onYouTubeIframeAPIReady=function(){ytReady=true;};
 (function(){const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);})();
 
-/* ─── SCREENS ─── */
+/* в”Ђв”Ђв”Ђ SCREENS в”Ђв”Ђв”Ђ */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
 
-/* ─── LOVE MODAL ─── */
+/* в”Ђв”Ђв”Ђ LOVE MODAL в”Ђв”Ђв”Ђ */
 function showLoveModal(){
   document.getElementById('loveModal').style.display='flex';
 }
@@ -498,7 +503,7 @@ function loveAnswer(){
     setTimeout(()=>{
       const e=document.createElement('div');
       e.className='react-float';
-      e.textContent=['❤️','💕','💖','💗','💓'][Math.floor(Math.random()*5)];
+      e.textContent=['вќ¤пёЏ','рџ’•','рџ’–','рџ’—','рџ’“'][Math.floor(Math.random()*5)];
       e.style.left=(10+Math.random()*80)+'%';
       e.style.bottom=(10+Math.random()*40)+'%';
       e.style.fontSize=(2+Math.random()*2)+'rem';
@@ -514,12 +519,18 @@ function loveAnswer(){
   },3500);
 }
 
-/* ─── ROOM ─── */
+/* в”Ђв”Ђв”Ђ ROOM в”Ђв”Ђв”Ђ */
 function getMyName(){
   const n=document.getElementById('ni').value.trim();
-  return n||'Аноним';
+  return n||'РђРЅРѕРЅРёРј';
 }
 function mkCode(){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<6;i++)s+=ch[Math.floor(Math.random()*ch.length)];return s;}
+function randomToken(len){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let out='';
+  for(let i=0;i<(len||10);i++)out+=chars[Math.floor(Math.random()*chars.length)];
+  return out;
+}
 
 function setJoinOpen(open,opts){
   const section=document.getElementById('jsec');
@@ -529,7 +540,7 @@ function setJoinOpen(open,opts){
   section.setAttribute('aria-hidden',open?'false':'true');
   toggleBtn.classList.toggle('open',open);
   toggleBtn.setAttribute('aria-expanded',open?'true':'false');
-  toggleBtn.textContent=open?'Скрыть вход':'Войти по коду';
+  toggleBtn.textContent=open?'РЎРєСЂС‹С‚СЊ РІС…РѕРґ':'Р’РѕР№С‚Рё РїРѕ РєРѕРґСѓ';
   if(open&&opts&&opts.focus){
     setTimeout(()=>document.getElementById('jin').focus(),120);
   }
@@ -541,8 +552,38 @@ function updateJoinButtonState(){
   const code=input.value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
   joinBtn.disabled=joiningRoom||code.length!==6;
 }
-function clearJoinTimer(){
-  if(joinConnectTimer){clearTimeout(joinConnectTimer);joinConnectTimer=null;}
+function clearJoinTimers(){
+  if(joinRetryTimer){clearTimeout(joinRetryTimer);joinRetryTimer=null;}
+  if(joinAttemptTimer){clearTimeout(joinAttemptTimer);joinAttemptTimer=null;}
+}
+function stopSyncTicker(){
+  if(syncIv){clearInterval(syncIv);syncIv=null;}
+}
+function startSyncTicker(){
+  stopSyncTicker();
+  syncIv=setInterval(()=>{
+    const ct=getCurrentTime();
+    myTime=ct;
+    send({t:'time',tm:ct});
+    updateUsers();
+  },3000);
+}
+function closeConn(){
+  if(conn){try{conn.close();}catch(x){} conn=null;}
+}
+function resetTransport(preservePeer){
+  closeConn();
+  connected=false;
+  setStatus(false);
+  peerName='';
+  peerTime=0;
+  stopSyncTicker();
+  if(!preservePeer&&peer){
+    try{peer.destroy();}catch(x){}
+    peer=null;
+    roomPeerOpen=false;
+  }
+  updateUsers();
 }
 function setJoinBusy(busy){
   joiningRoom=busy;
@@ -551,69 +592,75 @@ function setJoinBusy(busy){
   const toggleBtn=document.getElementById('joinToggleBtn');
   if(input)input.disabled=busy;
   if(toggleBtn)toggleBtn.disabled=busy;
-  if(joinBtn)joinBtn.textContent=busy?'Подключаемся…':'Войти ♥';
+  if(joinBtn)joinBtn.textContent=busy?'РџРѕРґРєР»СЋС‡Р°РµРјСЃСЏвЂ¦':'Р’РѕР№С‚Рё в™Ґ';
   if(!busy){
-    clearJoinTimer();
+    clearJoinTimers();
     joinAttempts=0;
     joinCode='';
+    connectionNonce='';
   }
   updateJoinButtonState();
 }
 function failJoinFlow(msg){
+  resetTransport(true);
   setJoinBusy(false);
   toggleJoin(true);
   toast(msg);
 }
-function scheduleJoinTimeout(){
-  clearJoinTimer();
-  joinConnectTimer=setTimeout(function(){
-    if(!joiningRoom||connected)return;
-    retryJoin('Долго подключается');
+function scheduleJoinAttemptTimeout(){
+  if(joinAttemptTimer)clearTimeout(joinAttemptTimer);
+  joinAttemptTimer=setTimeout(function(){
+    if(joiningRoom&&!connected)retryJoin('РҐРѕСЃС‚ РїРѕРєР° РЅРµ РѕС‚РІРµС‚РёР»');
   },JOIN_ATTEMPT_TIMEOUT);
-}
-function connectToJoinCode(){
-  if(!peer||!joinCode)return;
-  if(conn){try{conn.close();}catch(x){}}
-  joinAttempts++;
-  conn=peer.connect('sera-'+joinCode,{reliable:true,serialization:'json'});
-  wireConn(false);
-  scheduleJoinTimeout();
 }
 function retryJoin(reason){
   if(!joiningRoom)return;
+  clearJoinTimers();
   if(joinAttempts>=JOIN_MAX_ATTEMPTS){
-    failJoinFlow('Не удалось подключиться. Попроси создать новую комнату и попробуйте снова.');
+    failJoinFlow('РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ. РџРѕРїСЂРѕСЃРё СЃРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РєРѕРјРЅР°С‚Сѓ Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·.');
     return;
   }
-  const nextTry=joinAttempts+1;
-  toast((reason||'Повторяем подключение')+'… попытка '+nextTry+'/'+JOIN_MAX_ATTEMPTS);
-  setTimeout(function(){
-    if(joiningRoom)connectToJoinCode();
-  },1500);
+  toast((reason||'РџРѕРІС‚РѕСЂСЏРµРј РїРѕРґРєР»СЋС‡РµРЅРёРµ')+'вЂ¦');
+  joinRetryTimer=setTimeout(()=>attemptJoin(),JOIN_RETRY_DELAY);
+}
+function attemptJoin(){
+  if(!joiningRoom)return;
+  if(!peer||!roomPeerOpen){
+    failJoinFlow('РЎРµСЂРІРµСЂ РєРѕРјРЅР°С‚ РЅРµРґРѕСЃС‚СѓРїРµРЅ. РћР±РЅРѕРІРё СЃС‚СЂР°РЅРёС†Сѓ Рё РїРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°.');
+    return;
+  }
+  if(!joinCode){
+    failJoinFlow('РљРѕРґ РєРѕРјРЅР°С‚С‹ РїРѕС‚РµСЂСЏРЅ. Р’РІРµРґРё РєРѕРґ СЃРЅРѕРІР°.');
+    return;
+  }
+  joinAttempts++;
+  toast('РџРѕРґРєР»СЋС‡Р°РµРјСЃСЏвЂ¦ РїРѕРїС‹С‚РєР° '+joinAttempts+'/'+JOIN_MAX_ATTEMPTS);
+  closeConn();
+  connectionNonce=randomToken(10);
+  conn=peer.connect('sera-'+joinCode,{reliable:true,serialization:'json',metadata:{name:myName,v:2,nonce:connectionNonce}});
+  bindConnection(false);
+  scheduleJoinAttemptTimeout();
 }
 function startJoinFlow(code){
   joinCode=code;
   joinAttempts=0;
-  connectToJoinCode();
+  attemptJoin();
 }
 
 function createRoom(){
-  myName=getMyName();isHost=true;
+  myName=getMyName();
+  isHost=true;
   const code=mkCode();
   document.getElementById('jin').value='';
   setJoinBusy(false);
   setJoinOpen(false);
-  updateJoinButtonState();
+  resetTransport(false);
   updateUsers();
   initPeer('sera-'+code,function(){
     document.getElementById('cd').textContent=code;
     show('sc-waiting');
-  });
-  peer.on('connection',function(c){
-    conn=c;wireConn(true);
-    show('sc-player');
-    toast('♥ Соединение установлено!');
-  });
+    toast('РљРѕРјРЅР°С‚Р° СЃРѕР·РґР°РЅР°. Р–РґС‘Рј РїРѕРґРєР»СЋС‡РµРЅРёРµ в™Ґ');
+  },'host');
 }
 
 function toggleJoin(force){
@@ -625,124 +672,254 @@ function toggleJoin(force){
 
 function joinRoom(){
   if(joiningRoom)return;
-  myName=getMyName();isHost=false;
+  myName=getMyName();
+  isHost=false;
   const input=document.getElementById('jin');
   const code=input.value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
   input.value=code;
   if(code.length!==6){
     toggleJoin(true);
-    toast('Введи 6-значный код комнаты');
+    toast('Р’РІРµРґРё 6-Р·РЅР°С‡РЅС‹Р№ РєРѕРґ РєРѕРјРЅР°С‚С‹');
     updateJoinButtonState();
     return;
   }
+  resetTransport(false);
   updateUsers();
   setJoinBusy(true);
   initPeer(undefined,function(){
     startJoinFlow(code);
-  });
+  },'guest');
 }
 
 function copyCode(){
   const code=document.getElementById('cd').textContent;
-  navigator.clipboard.writeText(code).then(()=>toast('Скопировано: '+code)).catch(()=>toast('Код: '+code));
+  navigator.clipboard.writeText(code).then(()=>toast('РЎРєРѕРїРёСЂРѕРІР°РЅРѕ: '+code)).catch(()=>toast('РљРѕРґ: '+code));
 }
 
-/* ─── PEER ─── */
-function initPeer(id,onOpen){
+/* в”Ђв”Ђв”Ђ PEER в”Ђв”Ђв”Ђ */
+function initPeer(id,onOpen,role){
   const iceServers=[
     {urls:'stun:stun.l.google.com:19302'},
     {urls:'stun:stun1.l.google.com:19302'},
     {urls:'stun:stun2.l.google.com:19302'},
     {urls:'stun:stun.cloudflare.com:3478'},
-    // Бесплатный публичный TURN — помогает при жёстком NAT и мобильном интернете
+    {urls:'stun:global.stun.twilio.com:3478'},
     {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
     {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
-    {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
+    {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'}
   ];
   const cfg={
-    host:'0.peerjs.com',port:443,path:'/',secure:true,debug:0,
-    config:{iceServers,iceCandidatePoolSize:10}
+    host:'0.peerjs.com',
+    port:443,
+    path:'/',
+    secure:true,
+    debug:1,
+    pingInterval:4000,
+    config:{iceServers,iceCandidatePoolSize:10,iceTransportPolicy:'all'}
   };
-  if(peer){try{peer.destroy();}catch(x){}}
+
+  if(peer){
+    try{peer.destroy();}catch(x){}
+  }
   peer=id?new Peer(id,cfg):new Peer(cfg);
-  peer.on('open',onOpen||function(){});
+  roomPeerOpen=false;
+
+  peer.on('open',function(){
+    roomPeerOpen=true;
+    if(onOpen)onOpen();
+  });
+
+  peer.on('connection',function(c){
+    if(role!=='host'){
+      try{c.close();}catch(x){}
+      return;
+    }
+    if(conn&&connected){
+      try{c.send({t:'room-busy'});}catch(x){}
+      setTimeout(()=>{try{c.close();}catch(e){}},120);
+      return;
+    }
+    if(conn&&!connected){
+      try{conn.close();}catch(x){}
+    }
+    conn=c;
+    connectionNonce=randomToken(10);
+    bindConnection(true);
+  });
+
   peer.on('error',function(e){
-    if(e.type==='unavailable-id'&&id){
-      // код занят — генерируем новый
-      peer.destroy();
+    const type=e&&e.type?e.type:'unknown';
+
+    if(type==='unavailable-id'&&id&&role==='host'){
       const code=mkCode();
       document.getElementById('cd').textContent=code;
-      initPeer('sera-'+code,function(){show('sc-waiting');});
-      peer.on('connection',function(c){conn=c;wireConn(true);show('sc-player');toast('♥ Соединение установлено!');});
-    } else if(e.type==='peer-unavailable'){
-      retryJoin('Комната пока недоступна');
-    } else if(e.type==='network'||e.type==='disconnected'||e.type==='server-error'){
-      setJoinBusy(false);
-      toast('⚠️ Ошибка сети. Попробуй обновить страницу.');
+      initPeer('sera-'+code,function(){show('sc-waiting');toast('РљРѕРґ РѕР±РЅРѕРІР»С‘РЅ: '+code);},'host');
+      return;
+    }
+
+    if(role==='guest'&&joiningRoom){
+      if(type==='peer-unavailable'){retryJoin('РљРѕРјРЅР°С‚Р° РїРѕРєР° РЅРµРґРѕСЃС‚СѓРїРЅР°');return;}
+      if(type==='network'||type==='disconnected'||type==='server-error'||type==='socket-error'){
+        retryJoin('РЎРµС‚СЊ РЅРµСЃС‚Р°Р±РёР»СЊРЅР°, РїСЂРѕР±СѓРµРј РµС‰С‘');
+        return;
+      }
+    }
+
+    if(joiningRoom){
+      retryJoin('РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ: '+type);
     } else {
-      setJoinBusy(false);
-      toast('Ошибка соединения: '+e.type);
+      toast('РћС€РёР±РєР° РєРѕРјРЅР°С‚С‹: '+type);
     }
   });
+
   peer.on('disconnected',function(){
-    connected=false;setStatus(false);setJoinBusy(false);updateUsers();
-    setTimeout(()=>{try{peer.reconnect();}catch(x){}},3000);
+    roomPeerOpen=false;
+    connected=false;
+    setStatus(false);
+    updateUsers();
+    if(role==='host'){
+      toast('РЎРІСЏР·СЊ СЃ СЃРµСЂРІРµСЂРѕРј РєРѕРјРЅР°С‚ РїСЂРѕРїР°Р»Р°, РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°СЋвЂ¦');
+      setTimeout(()=>{try{peer.reconnect();}catch(x){}},1200);
+      return;
+    }
+    if(role==='guest'&&joiningRoom){
+      try{peer.reconnect();}catch(x){}
+      retryJoin('РџРµСЂРµРїРѕРґРєР»СЋС‡Р°РµРјСЃСЏ Рє РєРѕРјРЅР°С‚Рµ');
+    }
   });
 }
 
-function wireConn(asHost){
-  conn.on('data',handleData);
-  conn.on('open',function(){
-    connected=true;setStatus(true);
-    clearJoinTimer();
-    send({t:'hello',name:myName,host:asHost});
-    // Переключаем экран — и для хоста (когда гость подключился) и для гостя
-    if(!asHost){setJoinBusy(false);setJoinOpen(false);show('sc-player');toast('♥ Подключилась к комнате!');}
+function bindConnection(asHost){
+  if(!conn)return;
+
+  let handshakeDone=false;
+  let gotHelloAck=false;
+  const helloTimer=setTimeout(function(){
+    if(handshakeDone)return;
+    if(!asHost&&joiningRoom){retryJoin('РќРµС‚ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ РѕС‚ РєРѕРјРЅР°С‚С‹');}
+    else {try{conn.close();}catch(x){}}
+  },HELLO_TIMEOUT);
+
+  function completeHandshake(){
+    if(handshakeDone)return;
+    handshakeDone=true;
+    clearTimeout(helloTimer);
+    clearJoinTimers();
+    connected=true;
+    setStatus(true);
+    updateUsers();
+
+    if(!asHost){
+      setJoinBusy(false);
+      setJoinOpen(false);
+      show('sc-player');
+      toast('в™Ґ РџРѕРґРєР»СЋС‡РµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ!');
+    } else {
+      show('sc-player');
+      toast('в™Ґ РЎРѕРµРґРёРЅРµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ!');
+    }
+
     if(asHost&&currentUrl){
       setTimeout(()=>{
         const tm=getCurrentTime();
         const playing=isPlaying();
         send({t:'sync',url:currentUrl,tm,playing});
-      },600);
+      },650);
     }
-    if(syncIv)clearInterval(syncIv);
-    syncIv=setInterval(()=>{
-      const ct=getCurrentTime();
-      myTime=ct;
-      send({t:'time',tm:ct});
+
+    startSyncTicker();
+  }
+
+  function handleRoomSignal(d){
+    if(!d||typeof d!=='object')return false;
+
+    if(d.t==='room-busy'){
+      if(!asHost&&joiningRoom)failJoinFlow('РљРѕРјРЅР°С‚Р° СѓР¶Рµ Р·Р°РЅСЏС‚Р°. РџРѕРїСЂРѕСЃРё РЅРѕРІС‹Р№ РєРѕРґ.');
+      return true;
+    }
+
+    if(d.t==='hello'){
+      peerName=d.name||peerName||'РђРЅРѕРЅРёРј';
       updateUsers();
-    },3000);
+      send({t:'hello-ack',name:myName,nonce:d.nonce||'',host:isHost,version:2});
+      if(asHost||gotHelloAck)completeHandshake();
+      return true;
+    }
+
+    if(d.t==='hello-ack'){
+      peerName=d.name||peerName||'РђРЅРѕРЅРёРј';
+      updateUsers();
+      gotHelloAck=true;
+      completeHandshake();
+      return true;
+    }
+
+    return false;
+  }
+
+  conn.on('open',function(){
+    send({t:'hello',name:myName,host:isHost,nonce:connectionNonce,version:2});
+    if(!asHost)scheduleJoinAttemptTimeout();
   });
+
+  conn.on('data',function(d){
+    if(handleRoomSignal(d))return;
+    if(!connected)return;
+    handleData(d);
+  });
+
   conn.on('close',function(){
     const wasConnected=connected;
-    connected=false;setStatus(false);peerName='';peerTime=0;updateUsers();
-    if(syncIv){clearInterval(syncIv);syncIv=null;}
-    if(!asHost&&joiningRoom&&!wasConnected){retryJoin('Соединение прервалось');return;}
+    clearTimeout(helloTimer);
+    connected=false;
+    setStatus(false);
+    peerName='';
+    peerTime=0;
+    stopSyncTicker();
+    updateUsers();
+
+    if(!asHost&&joiningRoom&&!wasConnected){
+      retryJoin('РЎРѕРµРґРёРЅРµРЅРёРµ РїСЂРµСЂРІР°Р»РѕСЃСЊ');
+      return;
+    }
+
     setJoinBusy(false);
-    toast('Соединение прервано…');
+    if(wasConnected)toast('РЎРѕРµРґРёРЅРµРЅРёРµ РїСЂРµСЂРІР°РЅРѕвЂ¦');
   });
-  conn.on('error',function(err){
+
+  conn.on('error',function(){
     const wasConnected=connected;
-    connected=false;setStatus(false);peerName='';updateUsers();
-    if(!asHost&&joiningRoom&&!wasConnected){retryJoin('Ошибка соединения');return;}
+    clearTimeout(helloTimer);
+    connected=false;
+    setStatus(false);
+    peerName='';
+    peerTime=0;
+    stopSyncTicker();
+    updateUsers();
+
+    if(!asHost&&joiningRoom&&!wasConnected){
+      retryJoin('РћС€РёР±РєР° РєР°РЅР°Р»Р° СЃРІСЏР·Рё');
+      return;
+    }
+
     setJoinBusy(false);
-    toast('Не удалось подключиться. Проверь код и попробуй снова.');
+    toast('РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ. РџСЂРѕРІРµСЂСЊ РєРѕРґ Рё РїРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°.');
   });
 }
 
 function send(d){if(conn&&conn.open)conn.send(d);}
 function setStatus(on){
   document.getElementById('sdot').className='sdot'+(on?'':' off');
-  document.getElementById('stxt').textContent=on?'Вместе ♥':'Не в сети';
+  document.getElementById('stxt').textContent=on?'Р’РјРµСЃС‚Рµ в™Ґ':'РќРµ РІ СЃРµС‚Рё';
 }
 
-/* ─── REMOTE EVENTS ─── */
+/* в”Ђв”Ђв”Ђ REMOTE EVENTS в”Ђв”Ђв”Ђ */
 function handleData(d){
   switch(d.t){
     case'hello':
-      peerName=d.name||'Аноним';
+      peerName=d.name||'РђРЅРѕРЅРёРј';
       updateUsers();
-      toast('♥ '+(peerName)+' в комнате!');
+      toast('в™Ґ '+(peerName)+' РІ РєРѕРјРЅР°С‚Рµ!');
       if(!d.host)send({t:'hello',name:myName,host:isHost});
       break;
     case'sync':
@@ -761,13 +938,13 @@ function handleData(d){
       syncing=true;
       // Hard seek to sender's exact time, then play
       remoteHardSync(d.tm,true);
-      pill('▶ Воспроизводит');
+      pill('в–¶ Р’РѕСЃРїСЂРѕРёР·РІРѕРґРёС‚');
       setTimeout(()=>{syncing=false;},800);
       break;
     case'pause':
       syncing=true;
       remoteHardSync(d.tm,false);
-      pill('⏸ Пауза');
+      pill('вЏё РџР°СѓР·Р°');
       setTimeout(()=>{syncing=false;},800);
       break;
     case'seek':syncing=true;remoteSeek(d.tm);setTimeout(()=>{syncing=false;},600);break;
@@ -829,7 +1006,7 @@ function isPlaying(){
   return false;
 }
 
-/* ─── URL PARSE ─── */
+/* в”Ђв”Ђв”Ђ URL PARSE в”Ђв”Ђв”Ђ */
 function parseVkTimestamp(url){
   // ?t=2m40s or ?t=160
   const m=url.match(/[?&]t=(?:(\d+)m(\d+)s|(\d+))/);
@@ -844,7 +1021,7 @@ function parseUrl(url){
   if(m)return{t:'yt',id:m[1]};
   m=url.match(/youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/);
   if(m)return{t:'yt',id:m[1]};
-  // VK — поддержка vk.com и vkvideo.ru
+  // VK вЂ” РїРѕРґРґРµСЂР¶РєР° vk.com Рё vkvideo.ru
   m=url.match(/(?:vk\.com|vkvideo\.ru)\/video(-?\d+)_(\d+)/);
   if(m)return{t:'vk',oid:m[1],vid:m[2],tm:parseVkTimestamp(url)};
   m=url.match(/(?:vk\.com|vkvideo\.ru)\/clip(-?\d+)_(\d+)/);
@@ -855,12 +1032,12 @@ function parseUrl(url){
   if(m)return{t:'rutube',id:m[1]};
   // Direct media
   if(/\.(mp4|webm|ogg|mov|mkv|m3u8)(\?.*)?$/i.test(url))return{t:'direct',url};
-  // Generic http — try cobalt first
+  // Generic http вЂ” try cobalt first
   if(/^https?:\/\//.test(url))return{t:'extract',url};
   return null;
 }
 
-/* ─── VIDEO EXTRACTION via cobalt.tools ─── */
+/* в”Ђв”Ђв”Ђ VIDEO EXTRACTION via cobalt.tools в”Ђв”Ђв”Ђ */
 async function extractVideo(url){
   try{
     const r=await fetch('https://api.cobalt.tools/',{
@@ -875,16 +1052,16 @@ async function extractVideo(url){
   return null;
 }
 
-/* ─── LOAD VIDEO ─── */
+/* в”Ђв”Ђв”Ђ LOAD VIDEO в”Ђв”Ђв”Ђ */
 function loadFromInput(){
   const url=document.getElementById('ui').value.trim();
-  if(!url){toast('Вставь ссылку на видео');return;}
+  if(!url){toast('Р’СЃС‚Р°РІСЊ СЃСЃС‹Р»РєСѓ РЅР° РІРёРґРµРѕ');return;}
   loadVideo(url,true);
 }
 
 async function loadVideo(url,broadcast,cb){
   const p=parseUrl(url);
-  if(!p){toast('Не удалось распознать ссылку');return;}
+  if(!p){toast('РќРµ СѓРґР°Р»РѕСЃСЊ СЂР°СЃРїРѕР·РЅР°С‚СЊ СЃСЃС‹Р»РєСѓ');return;}
   if(!broadcast)document.getElementById('ui').value=url;
   currentUrl=url;
   clearPlayer();
@@ -900,17 +1077,17 @@ async function loadVideo(url,broadcast,cb){
     // Show loading spinner
     showExtractLoader(true);
     const btn=document.getElementById('gobtn');
-    btn.disabled=true;btn.textContent='⏳ Извлекаю…';
+    btn.disabled=true;btn.textContent='вЏі РР·РІР»РµРєР°СЋвЂ¦';
     const direct=await extractVideo(url);
     showExtractLoader(false);
-    btn.disabled=false;btn.textContent='▶ Воспроизвести';
+    btn.disabled=false;btn.textContent='в–¶ Р’РѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё';
     if(direct){
       vidType='direct';
       loadDirect(direct);
       if(broadcast)send({t:'url',url:direct});
       if(cb)cb();
     } else {
-      toast('Не удалось извлечь видео. Попробуй прямую ссылку .mp4');
+      toast('РќРµ СѓРґР°Р»РѕСЃСЊ РёР·РІР»РµС‡СЊ РІРёРґРµРѕ. РџРѕРїСЂРѕР±СѓР№ РїСЂСЏРјСѓСЋ СЃСЃС‹Р»РєСѓ .mp4');
       document.getElementById('vph').style.display='flex';
       currentUrl='';
     }
@@ -923,7 +1100,7 @@ function showExtractLoader(on){
     if(ov)return;
     ov=document.createElement('div');
     ov.id='extLoader';ov.className='extract-overlay';
-    ov.innerHTML='<div class="extract-spinner"></div><div class="extract-msg">Извлекаю видео…</div>';
+    ov.innerHTML='<div class="extract-spinner"></div><div class="extract-msg">РР·РІР»РµРєР°СЋ РІРёРґРµРѕвЂ¦</div>';
     document.getElementById('vo').appendChild(ov);
   } else {
     if(ov)ov.remove();
@@ -943,7 +1120,7 @@ function clearPlayer(){
   dirVid=null;vidType=null;
 }
 
-/* ── YT ── */
+/* в”Ђв”Ђ YT в”Ђв”Ђ */
 function loadYT(vid){
   const vo=document.getElementById('vo');
   const d=document.createElement('div');
@@ -953,7 +1130,7 @@ function loadYT(vid){
     ytPlayer=new YT.Player('ytd',{
       videoId:vid,
       playerVars:{autoplay:1,rel:0,modestbranding:1,playsinline:1,origin:location.origin||'https://localhost'},
-      events:{onStateChange:onYtSt,onError:function(){toast('Ошибка YouTube плеера');}}
+      events:{onStateChange:onYtSt,onError:function(){toast('РћС€РёР±РєР° YouTube РїР»РµРµСЂР°');}}
     });
   }
   if(typeof YT!=='undefined'&&YT.Player){init();}
@@ -961,7 +1138,7 @@ function loadYT(vid){
     let tr=0;
     const iv=setInterval(()=>{
       if(typeof YT!=='undefined'&&YT.Player){clearInterval(iv);init();}
-      else if(++tr>30){clearInterval(iv);toast('YouTube API не загрузился');}
+      else if(++tr>30){clearInterval(iv);toast('YouTube API РЅРµ Р·Р°РіСЂСѓР·РёР»СЃСЏ');}
     },300);
   }
 }
@@ -973,7 +1150,7 @@ function onYtSt(e){
 }
 function startYtTr(){
   stopYtTr();lastYtT=ytPlayer?ytPlayer.getCurrentTime():0;
-  startRafTimeTrack(); // мобильный трекинг для YT тоже
+  startRafTimeTrack(); // РјРѕР±РёР»СЊРЅС‹Р№ С‚СЂРµРєРёРЅРі РґР»СЏ YT С‚РѕР¶Рµ
   ytIv=setInterval(()=>{
     if(!ytPlayer)return;
     try{const ct=ytPlayer.getCurrentTime();if(!syncing&&Math.abs(ct-lastYtT)>3)send({t:'seek',tm:ct});lastYtT=ct;}catch(e){}
@@ -981,7 +1158,7 @@ function startYtTr(){
 }
 function stopYtTr(){if(ytIv){clearInterval(ytIv);ytIv=null;}stopRafTimeTrack();}
 
-/* ── VK ── */
+/* в”Ђв”Ђ VK в”Ђв”Ђ */
 function loadVK(oid,vid,tm){
   vkFrame=null;vkCurrentTime=tm||0;vkPlaying=false;
   const fr=document.createElement('iframe');
@@ -992,19 +1169,19 @@ function loadVK(oid,vid,tm){
   fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
   document.getElementById('vo').appendChild(fr);
   vkFrame=fr;
-  // Показываем контрол-бар с ⏯ и временем (seek недоступен без длительности)
+  // РџРѕРєР°Р·С‹РІР°РµРј РєРѕРЅС‚СЂРѕР»-Р±Р°СЂ СЃ вЏЇ Рё РІСЂРµРјРµРЅРµРј (seek РЅРµРґРѕСЃС‚СѓРїРµРЅ Р±РµР· РґР»РёС‚РµР»СЊРЅРѕСЃС‚Рё)
   document.getElementById('vc').classList.add('on');
-  // Активируем JS API после загрузки плеера
+  // РђРєС‚РёРІРёСЂСѓРµРј JS API РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё РїР»РµРµСЂР°
   fr.addEventListener('load',()=>{
     setTimeout(()=>vkSend({api:1}),800);
   });
-  toast('VK: синхронизация через API ♥');
+  toast('VK: СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ С‡РµСЂРµР· API в™Ґ');
 }
 function loadVKEmbed(url){
   vkFrame=null;vkCurrentTime=0;vkPlaying=false;
   const fr=document.createElement('iframe');
   fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
-  // Добавляем js_api=1 если не стоит
+  // Р”РѕР±Р°РІР»СЏРµРј js_api=1 РµСЃР»Рё РЅРµ СЃС‚РѕРёС‚
   const u=url.includes('js_api')?url:url+(url.includes('?')?'&':'?')+'js_api=1';
   fr.src=u;fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
   document.getElementById('vo').appendChild(fr);
@@ -1013,17 +1190,17 @@ function loadVKEmbed(url){
   fr.addEventListener('load',()=>{setTimeout(()=>vkSend({api:1}),800);});
 }
 
-/* ── Rutube ── */
+/* в”Ђв”Ђ Rutube в”Ђв”Ђ */
 function loadRutube(id){
   const fr=document.createElement('iframe');
   fr.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
   fr.src='https://rutube.ru/play/embed/'+id+'?skinColor=d62b52&autoStart=true';
   fr.allow='autoplay;fullscreen';fr.allowFullscreen=true;
   document.getElementById('vo').appendChild(fr);
-  toast('Rutube: управление через кнопки плеера');
+  toast('Rutube: СѓРїСЂР°РІР»РµРЅРёРµ С‡РµСЂРµР· РєРЅРѕРїРєРё РїР»РµРµСЂР°');
 }
 
-/* ── DIRECT ── */
+/* в”Ђв”Ђ DIRECT в”Ђв”Ђ */
 function loadDirect(url){
   const v=document.createElement('video');
   v.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:#000';
@@ -1031,25 +1208,25 @@ function loadDirect(url){
   document.getElementById('vo').appendChild(v);
   dirVid=v;vidType='direct';
   document.getElementById('vc').classList.add('on');
-  v.addEventListener('play',()=>{if(!syncing)send({t:'play',tm:v.currentTime});document.getElementById('ppb').textContent='⏸';});
-  v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='▶';});
+  v.addEventListener('play',()=>{if(!syncing)send({t:'play',tm:v.currentTime});document.getElementById('ppb').textContent='вЏё';});
+  v.addEventListener('pause',()=>{if(!syncing)send({t:'pause',tm:v.currentTime});document.getElementById('ppb').textContent='в–¶';});
   v.addEventListener('seeked',()=>{if(!syncing)send({t:'seek',tm:v.currentTime});});
   v.addEventListener('timeupdate',()=>{updProg();myTime=v.currentTime;});
-  // iOS: нативный плеер — ловим выход из фуллскрина чтобы синхронизировать время
+  // iOS: РЅР°С‚РёРІРЅС‹Р№ РїР»РµРµСЂ вЂ” Р»РѕРІРёРј РІС‹С…РѕРґ РёР· С„СѓР»Р»СЃРєСЂРёРЅР° С‡С‚РѕР±С‹ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ РІСЂРµРјСЏ
   v.addEventListener('webkitendfullscreen',()=>{
     myTime=v.currentTime;
     if(connected)send({t:'time',tm:v.currentTime});
     updateUsers();
   });
   v.addEventListener('webkitbeginfullscreen',()=>{
-    // запускаем агрессивный трекинг пока открыт нативный плеер
+    // Р·Р°РїСѓСЃРєР°РµРј Р°РіСЂРµСЃСЃРёРІРЅС‹Р№ С‚СЂРµРєРёРЅРі РїРѕРєР° РѕС‚РєСЂС‹С‚ РЅР°С‚РёРІРЅС‹Р№ РїР»РµРµСЂ
     startRafTimeTrack();
   });
   startRafTimeTrack();
   v.play().catch(()=>{});
 }
 
-/* ─── CONTROLS ─── */
+/* в”Ђв”Ђв”Ђ CONTROLS в”Ђв”Ђв”Ђ */
 function togglePP(){
   if(vidType==='direct'&&dirVid){dirVid.paused?dirVid.play().catch(()=>{}):dirVid.pause();}
   else if(vidType==='vk'||vidType==='vk-direct'){vkPlaying?vkCmd('pause'):vkCmd('play');}
@@ -1081,7 +1258,7 @@ function updProg(){
 }
 function fmt(s){if(!s||isNaN(s))return'0:00';const m=Math.floor(s/60),ss=Math.floor(s%60);return m+':'+(ss<10?'0':'')+ss;}
 
-/* ─── REACTIONS ─── */
+/* в”Ђв”Ђв”Ђ REACTIONS в”Ђв”Ђв”Ђ */
 function sendReaction(emoji){
   showReaction(emoji,true);
   send({t:'reaction',emoji});
@@ -1094,14 +1271,14 @@ function showReaction(emoji,mine){
   el.style.bottom='80px';
   document.body.appendChild(el);
   setTimeout(()=>el.remove(),1900);
-  if(!mine)pill(peerName+' отправил(а) '+emoji);
+  if(!mine)pill(peerName+' РѕС‚РїСЂР°РІРёР»(Р°) '+emoji);
 }
 
-/* ─── NOTIFICATIONS ─── */
+/* в”Ђв”Ђв”Ђ NOTIFICATIONS в”Ђв”Ђв”Ђ */
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(tTmr);tTmr=setTimeout(()=>el.classList.remove('on'),3200);}
 function pill(msg){const el=document.getElementById('pill');el.textContent=msg;el.classList.add('on');clearTimeout(pTmr);pTmr=setTimeout(()=>el.classList.remove('on'),2500);}
 
-/* ─── KEYBOARD ─── */
+/* в”Ђв”Ђв”Ђ KEYBOARD в”Ђв”Ђв”Ђ */
 document.addEventListener('keydown',function(e){
   if(document.activeElement.tagName==='INPUT')return;
   if(!document.getElementById('sc-player').classList.contains('active'))return;
@@ -1120,32 +1297,33 @@ document.getElementById('jin').addEventListener('input',function(){
 updateJoinButtonState();
 document.addEventListener('keydown',e=>{if(document.activeElement===document.getElementById('ui')&&e.key==='Enter')loadFromInput();});
 
-/* ─── TAB TITLE CYCLE ─── */
-const titles=['♥ Я люблю Серафиму ♥','💕 Серафима — моя любовь','❤ Смотрим вместе'];
+/* в”Ђв”Ђв”Ђ TAB TITLE CYCLE в”Ђв”Ђв”Ђ */
+const titles=['в™Ґ РЇ Р»СЋР±Р»СЋ РЎРµСЂР°С„РёРјСѓ в™Ґ','рџ’• РЎРµСЂР°С„РёРјР° вЂ” РјРѕСЏ Р»СЋР±РѕРІСЊ','вќ¤ РЎРјРѕС‚СЂРёРј РІРјРµСЃС‚Рµ'];
 let ti=0;setInterval(()=>{document.title=titles[ti++%titles.length];},4000);
 </script>
 
-<!-- ════ LOVE MODAL ════ -->
+<!-- в•ђв•ђв•ђв•ђ LOVE MODAL в•ђв•ђв•ђв•ђ -->
 <div class="love-overlay" id="loveModal" style="display:none;">
   <div class="love-card">
-    <span class="love-heart">♥</span>
-    <div class="love-q">Любишь меня?</div>
-    <p class="love-sub">подумай хорошенько…</p>
+    <span class="love-heart">в™Ґ</span>
+    <div class="love-q">Р›СЋР±РёС€СЊ РјРµРЅСЏ?</div>
+    <p class="love-sub">РїРѕРґСѓРјР°Р№ С…РѕСЂРѕС€РµРЅСЊРєРѕвЂ¦</p>
     <div class="love-btns">
-      <button class="love-btn" onclick="loveAnswer()">Да 💕</button>
-      <button class="love-btn" onclick="loveAnswer()">Да ♥</button>
+      <button class="love-btn" onclick="loveAnswer()">Р”Р° рџ’•</button>
+      <button class="love-btn" onclick="loveAnswer()">Р”Р° в™Ґ</button>
     </div>
   </div>
 </div>
 <div class="love-answer" id="loveAnswer" style="display:none;">
   <div class="love-answer-inner">
-    <span class="love-answer-emoji">💖</span>
-    <div class="love-answer-text">И я тебя очень<br>сильно люблю</div>
-    <div class="love-answer-sub">навсегда и всегда ♥</div>
+    <span class="love-answer-emoji">рџ’–</span>
+    <div class="love-answer-text">Р СЏ С‚РµР±СЏ РѕС‡РµРЅСЊ<br>СЃРёР»СЊРЅРѕ Р»СЋР±Р»СЋ</div>
+    <div class="love-answer-sub">РЅР°РІСЃРµРіРґР° Рё РІСЃРµРіРґР° в™Ґ</div>
   </div>
 </div>
 
 </body>
 </html>
+
 
 
